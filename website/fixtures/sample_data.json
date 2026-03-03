@@ -1,0 +1,92 @@
+[
+  {
+    "model": "website.publication",
+    "pk": 1,
+    "fields": {
+      "title": "Integrative Genomics Atlas for Emerging Pathogens",
+      "journal": "Genome Research",
+      "year": 2024,
+      "topic": "Genomics",
+      "summary": "Demonstration record showing how publications are rendered and filtered.",
+      "doi_link": "https://doi.org/10.1000/example-atlas",
+      "github_link": "https://github.com/example/genomics-atlas",
+      "external_resource": "https://scholar.google.com",
+      "featured": true
+    }
+  },
+  {
+    "model": "website.project",
+    "pk": 1,
+    "fields": {
+      "title": "Pan-African Pathogen Pipeline",
+      "description": "Containerized workflows for low-bandwidth labs with automated QC, variant calling, and dashboard export.",
+      "technologies": "Nextflow, Snakemake, AWS Batch",
+      "project_type": "genomics",
+      "duration": "2023 – Present",
+      "link": "https://example.org/pipeline",
+      "repository": "https://github.com/example/pan-africa-pipeline",
+      "published_on": "2024-02-10"
+    }
+  },
+  {
+    "model": "website.skill",
+    "pk": 1,
+    "fields": {
+      "name": "Python",
+      "category": "programming",
+      "proficiency": 95,
+      "description": "Scientific Python, FastAPI microservices, and ML ops.",
+      "example_link": "https://github.com/example"
+    }
+  },
+  {
+    "model": "website.labexperience",
+    "pk": 1,
+    "fields": {
+      "lab_name": "Institut Pasteur de Dakar",
+      "role": "Lead Bioinformatics Scientist",
+      "start_year": 2020,
+      "end_year": 2022,
+      "location": "Dakar, Senegal",
+      "focus": "Genomic epidemiology, sequencing automation, and training.",
+      "description": "Co-led creation of a sequencing core supporting regional outbreak response.",
+      "report_link": "https://example.org/report.pdf"
+    }
+  },
+  {
+    "model": "website.newspost",
+    "pk": 1,
+    "fields": {
+      "title": "Keynote at Global Genomics Summit",
+      "slug": "keynote-global-genomics-summit",
+      "summary": "Sharing lessons learned from building continental-scale pathogen pipelines.",
+      "link": "https://example.org/talk",
+      "publish_at": "2025-01-15T10:00:00Z",
+      "unpublish_at": null,
+      "is_draft": false,
+      "is_featured": true,
+      "created_at": "2024-12-20T09:00:00Z",
+      "updated_at": "2024-12-20T09:00:00Z"
+    }
+  },
+  {
+    "model": "website.collaboration",
+    "pk": 1,
+    "fields": {
+      "name": "West African Genomics Network",
+      "partner_type": "academic",
+      "region": "West Africa",
+      "location": "Dakar, Senegal",
+      "start_year": 2021,
+      "end_year": null,
+      "summary": "Regional alliance scaling genomic surveillance and training cohorts across five countries.",
+      "grants": "NIH U01, Africa CDC flagship",
+      "responsibilities": "Pipeline architecture, mentorship, and tech transfer.",
+      "latitude": 14.7167,
+      "longitude": -17.4677,
+      "labs": [1],
+      "projects": [1]
+    }
+  }
+]
+

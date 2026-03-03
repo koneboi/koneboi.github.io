@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Projects & Pipelines{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div class="section-heading">
+        <h1>Projects & Pipelines</h1>
+        <p>Explore genomics pipelines, bioinformatics tools, simulation studies, and data resources.</p>
+    </div>
+    <form class="filter-buttons mb-4" method="get">
+        <input type="hidden" name="type" value="{{ selected_type }}">
+        <div class="btn-group flex-wrap" role="group">
+            <a class="btn btn-outline-dark {% if selected_type == 'all' %}active{% endif %}" href="?type=all">All</a>
+            {% for value, label in project_types %}
+            <a class="btn btn-outline-dark {% if selected_type == value %}active{% endif %}" href="?type={{ value }}">{{ label }}</a>
+            {% endfor %}
+        </div>
+    </form>
+    <div class="row g-4" id="projectGrid">
+        {% for project in projects %}
+        <div class="col-md-4" data-project-type="{{ project.project_type }}">
+            <article class="card h-100 project-card">
+                <div class="card-body d-flex flex-column">
+                    <span class="badge bg-primary-subtle text-primary-emphasis mb-2">{{ project.get_project_type_display }}</span>
+                    <h3 class="h5">{{ project.title }}</h3>
+                    <p class="flex-grow-1">{{ project.description|truncatewords:30 }}</p>
+                    <p class="text-muted small mb-3">Tech: {{ project.technologies }}</p>
+                    <div class="d-flex gap-2">
+                        {% if project.link %}
+                        <a class="btn btn-sm btn-outline-primary" href="{{ project.link }}" target="_blank" rel="noopener">Publication</a>
+                        {% endif %}
+                        {% if project.repository %}
+                        <a class="btn btn-sm btn-outline-dark" href="{{ project.repository }}" target="_blank" rel="noopener">Code</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+        </div>
+        {% empty %}
+        <p class="text-muted">Add projects through the admin to showcase your work.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

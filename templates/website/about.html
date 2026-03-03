@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About & CV{% endblock %}
+
+{% block content %}
+<section class="section bg-dark text-light">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <h1>About Dr. Kone</h1>
+                <p class="lead">Genomics, bioinformatics, and modeling scientist with a decade of experience building data products,
+                    deploying pipelines on HPC/cloud infrastructure, and mentoring interdisciplinary teams.</p>
+                <ul class="list-unstyled">
+                    <li>• Ph.D. Computational Biology, specializing in multi-omics integration.</li>
+                    <li>• {{ project_count }} active computational platforms deployed across {{ lab_count }} labs.</li>
+                    <li>• Experience leading translational collaborations across Africa, Europe, and North America.</li>
+                </ul>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a class="btn btn-outline-light" href="{% static 'website/docs/Genomics_CV_placeholder.pdf' %}" download>Download CV</a>
+                    <a class="btn btn-light" href="{% url 'contact' %}">Contact</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="stats-card p-4 rounded-4 bg-gradient">
+                    <p class="h1 fw-bold mb-0">{{ project_count }}</p>
+                    <p class="text-uppercase small text-muted">Scientific platforms</p>
+                    <hr class="text-muted">
+                    <p class="h1 fw-bold mb-0">{{ lab_count }}</p>
+                    <p class="text-uppercase small text-muted">Labs collaborated</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section container">
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <h2>Scientific Focus Areas</h2>
+            <ul>
+                <li>Genomics pipelines for pathogen surveillance and precision oncology.</li>
+                <li>Multi-omics integration with advanced statistical modeling.</li>
+                <li>Interactive dashboards for translational research teams.</li>
+                <li>Capacity building and mentorship for lab informatics teams.</li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <h2>Selected Collaborators</h2>
+            <p>WHO-AFRO sentinel network, Institut Pasteur, Broad Institute, African CDC, national public health labs, and clinical research organizations.</p>
+            <p class="text-muted small">Add real collaborators or awards in this section by editing the template when you're ready.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

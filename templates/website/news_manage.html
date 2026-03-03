@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}News Dashboard{% endblock %}
+
+{% block content %}
+<section class="section container mt-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <h1>News Dashboard</h1>
+            <p class="text-muted mb-0">Drafts: {{ draft_count }} · Scheduled: {{ scheduled_count }} · Published: {{ published_count }}</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-secondary" href="{% url 'news' %}">View public page</a>
+            <a class="btn btn-primary" href="{% url 'news-create' %}">Add news post</a>
+        </div>
+    </div>
+    <div class="table-responsive shadow-sm bg-white rounded">
+        <table class="table mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Publish at</th>
+                    <th>Unpublish at</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news in news_posts %}
+                <tr>
+                    <td>{{ news.title }}</td>
+                    <td>
+                        {% if news.is_draft %}
+                            <span class="badge bg-secondary">Draft</span>
+                        {% elif news.publish_at > now %}
+                            <span class="badge bg-info text-dark">Scheduled</span>
+                        {% else %}
+                            <span class="badge bg-success">Live</span>
+                        {% endif %}
+                        {% if news.is_featured %}
+                        <span class="badge bg-warning text-dark">Featured</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ news.publish_at|date:"M d, Y H:i" }}</td>
+                    <td>
+                        {% if news.unpublish_at %}{{ news.unpublish_at|date:"M d, Y H:i" }}{% else %}&mdash;{% endif %}
+                    </td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'news-preview' slug=news.slug %}">Preview</a>
+                        <a class="btn btn-sm btn-outline-primary" href="{% url 'admin:website_newspost_change' news.pk %}">Edit</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">No news posts yet. Create one to get started.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if is_paginated %}
+    <nav class="mt-4" aria-label="News management pagination">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}
+

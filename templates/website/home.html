@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dr. Kone | Genomics & Computational Biology{% endblock %}
+
+{% block content %}
+<header id="top" class="hero d-flex align-items-center text-light">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="text-uppercase text-info mb-2">Genomics • Bioinformatics • Modeling</p>
+                <h1 class="display-4 fw-bold">Translating complex genomic signals into actionable science.</h1>
+                <p class="lead">I build reproducible pipelines, interactive dashboards, and predictive models that help research
+                    groups accelerate discoveries in human genomics, infectious diseases, and precision medicine.</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'projects' %}" class="btn btn-primary btn-lg">Explore Projects</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">Work Together</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="content-wrapper">
+    <section class="section container">
+        <div class="section-heading d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h2>Signature Projects</h2>
+                <p>Production-ready genomics workflows, pipelines, and interactive platforms.</p>
+            </div>
+            <a class="btn btn-outline-primary" href="{% url 'projects' %}">Browse all projects</a>
+        </div>
+            <div class="row g-4">
+                {% for project in featured_projects %}
+                <div class="col-md-4">
+                    <article class="card h-100 project-card">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary-subtle text-primary-emphasis mb-2">{{ project.get_project_type_display }}</span>
+                            <h3 class="h5">{{ project.title }}</h3>
+                            <p class="flex-grow-1">{{ project.description|truncatewords:25 }}</p>
+                            <a class="btn btn-outline-dark btn-sm mt-3" href="{% url 'projects' %}">View all projects</a>
+                        </div>
+                    </article>
+                </div>
+                {% empty %}
+                <p class="text-muted">Add projects via the admin to populate this grid.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section container">
+        <div class="section-heading d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h2>Latest News</h2>
+                <p>Invited talks, publications, collaborations, and funding updates.</p>
+            </div>
+            <a class="btn btn-outline-primary" href="{% url 'news' %}">Browse all news</a>
+        </div>
+        <div class="row g-4">
+            {% for item in latest_news %}
+            <div class="col-md-4">
+                <article class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <p class="text-muted small">{{ item.publish_at|date:"M d, Y" }}</p>
+                        <h3 class="h5">{{ item.title }}</h3>
+                        <p class="flex-grow-1">{{ item.summary|truncatewords:25 }}</p>
+                        <a class="btn btn-sm btn-outline-primary mt-3" href="{% url 'news' %}">Read more</a>
+                    </div>
+                </article>
+            </div>
+            {% empty %}
+            <p class="text-muted">Publish announcements in the admin to feature them on the homepage.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section bg-dark text-light">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <h2>Work with me</h2>
+                    <p class="lead">Partner on translational genomics, data integration, decision-support tools, and capacity-building initiatives.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a class="btn btn-primary" href="{% url 'contact' %}">Start a conversation</a>
+                        <a class="btn btn-outline-light" href="{% url 'about' %}">Review CV & bio</a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="stats-card p-4 rounded-4 bg-gradient">
+                        <p class="h2 fw-bold mb-0">Global collaborations</p>
+                        <p class="text-uppercase small text-muted">Africa · Europe · North America</p>
+                        <hr class="text-muted">
+                        <p class="mb-0">From pathogen surveillance to precision oncology—let's accelerate the next discovery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
