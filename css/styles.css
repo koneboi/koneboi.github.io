@@ -2,53 +2,12 @@
     --primary: #0d6efd;
     --dark: #212529;
     --light: #f8f9fa;
-    --bg-color: #ffffff;
-    --text-color: #212529;
-    --card-bg: #ffffff;
-    --card-text: #212529;
-    --muted: #6c757d;
-}
-
-[data-theme="dark"] {
-    --bg-color: #121212;
-    --text-color: #ffffff;
-    --card-bg: #1e1e1e;
-    --card-text: #ffffff;
-    --muted: #b0b0b0;
-}
-
-[data-theme="dark"] body,
-[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4,
-[data-theme="dark"] p, [data-theme="dark"] li, [data-theme="dark"] td {
-    color: var(--text-color) !important;
-}
-
-[data-theme="dark"] .card {
-    background-color: var(--card-bg) !important;
-    color: var(--card-text) !important;
-}
-
-[data-theme="dark"] .card-body,
-[data-theme="dark"] .card h3, [data-theme="dark"] .card h4,
-[data-theme="dark"] .card p, [data-theme="dark"] .card li {
-    color: var(--card-text) !important;
-}
-
-[data-theme="dark"] footer {
-    background-color: #000 !important;
-}
-
-[data-theme="dark"] .text-muted {
-    color: var(--muted) !important;
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.8;
     font-size: 19px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
 }
 
 .hero {
