@@ -1,6 +1,3 @@
-# IDE
-.vscode/
-.idea/
-
-# System
-.DS_Store
+*
+token.md
+token.md
