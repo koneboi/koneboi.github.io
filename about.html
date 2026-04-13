@@ -58,9 +58,13 @@
                     
                     <div class="mt-4 mb-3">
                         <button class="btn btn-primary btn-sm" onclick="document.getElementById('cv-viewer').style.display='block'; window.scrollTo(0, document.getElementById('cv-viewer').offsetTop - 100);">View CV (PDF)</button>
-                        <a href="mailto:koneb.bk@gmail.com" class="btn btn-outline-light btn-sm ms-2">Request Download</a>
+                        <a href="mailto:koneb.bk@gmail.com" class="btn btn-outline-light btn-sm ms-2">Request Full Access</a>
                     </div>
-                    <embed id="cv-viewer" src="docs/cv.pdf#toolbar=0&navpanes=0&scrollbar=0" style="display:none; width:100%; min-height:800px; margin-top:15px; border-radius:8px; border:1px solid #ddd;" title="CV"></embed>
+                    <div id="cv-viewer" style="display:none; margin-top:15px; position:relative;">
+                        <object data="docs/cv.pdf#zoom=50&toolbar=0&navpanes=0&scrollbar=0&view=fitH" type="application/pdf" style="width:100%; height:70vh; border-radius:8px; border:1px solid #ddd;">
+                            <p class="text-muted">Your browser doesn't support PDF viewing. <a href="mailto:koneb.bk@gmail.com">Request CV access</a></p>
+                        </object>
+                    </div>
                 </div>
                 <div class="col-lg-4 mt-4 mt-lg-0">
                     <div class="card border-0 shadow-sm">
