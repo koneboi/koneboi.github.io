@@ -262,26 +262,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/theme.js"></script>
-<script>
-// Set initial theme on page load
-document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.getElementById('theme-btn');
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        btn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-    }
-});
-
-function toggleTheme() {
-    const html = document.documentElement;
-    const btn = document.getElementById('theme-btn');
-    const current = html.getAttribute('data-theme');
-    const newTheme = current === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', newTheme);
-    btn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-    localStorage.setItem('theme', newTheme);
-}
-</script>
 </body>
 </html>

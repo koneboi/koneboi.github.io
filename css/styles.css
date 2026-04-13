@@ -10,11 +10,36 @@
 }
 
 [data-theme="dark"] {
-    --bg-color: #1a1a1a;
-    --text-color: #e0e0e0;
-    --card-bg: #2d2d2d;
-    --card-text: #e0e0e0;
-    --muted: #a0a0a0;
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --card-bg: #1e1e1e;
+    --card-text: #ffffff;
+    --muted: #b0b0b0;
+}
+
+[data-theme="dark"] body,
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4,
+[data-theme="dark"] p, [data-theme="dark"] li, [data-theme="dark"] td {
+    color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .card {
+    background-color: var(--card-bg) !important;
+    color: var(--card-text) !important;
+}
+
+[data-theme="dark"] .card-body,
+[data-theme="dark"] .card h3, [data-theme="dark"] .card h4,
+[data-theme="dark"] .card p, [data-theme="dark"] .card li {
+    color: var(--card-text) !important;
+}
+
+[data-theme="dark"] footer {
+    background-color: #000 !important;
+}
+
+[data-theme="dark"] .text-muted {
+    color: var(--muted) !important;
 }
 
 body {
