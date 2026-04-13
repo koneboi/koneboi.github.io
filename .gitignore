@@ -1,3 +1,23 @@
+# Ignore everything
 *
-token.md
+# But not these files
+!*.html
+!*.css
+!*.js
+!*.xml
+!images/
+!docs/
+!README.md
+!info.md
+!TODO.txt
+!index.html
+!about.html
+!publications.html
+!talks.html
+!training.html
+!portfolio.html
+!wet_labs.html
+!blog.html
+
+# Token files
 token.md

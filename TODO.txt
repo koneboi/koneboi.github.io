@@ -1,0 +1,35 @@
+# Portfolio TODO - Future Projects to Add
+
+## Content to Add
+- [ ] Add your actual publications when published
+- [ ] Add your conference talks with slides/links
+- [ ] Add more project details to portfolio
+- [ ] Add GitHub repository links for your code
+- [ ] Add your thesis/dissertation PDFs to docs/ folder
+- [ ] Write blog posts (genomics, AMR, bioinformatics tips)
+
+## Technical Improvements
+- [ ] Add your profile photo (images/profile.jpg)
+- [ ] Add more lab photos
+- [ ] Add conference/presentation photos
+- [ ] Optimize images for faster loading
+
+## SEO & Analytics
+- [ ] Add Google Analytics
+- [ ] Add Meta tags for social sharing
+- [ ] Add sitemap.xml
+- [ ] Add robots.txt
+
+## Additional Pages
+- [x] Blog page (created)
+- [ ] Resume page
+- [ ] Links/Resources page
+
+## Fixes
+- [ ] Update Google Scholar link with your actual profile ID
+- [ ] Update PubMed author search with your name format
+
+## Notes
+- Keep images under 500KB for fast loading
+- Use WebP format for photos
+- Add alt text to all images for accessibility

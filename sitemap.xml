@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://koneboi.github.io/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+<url><loc>https://koneboi.github.io/about.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://koneboi.github.io/publications.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://koneboi.github.io/wet_labs.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://koneboi.github.io/portfolio.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://koneboi.github.io/blog.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+</urlset>
