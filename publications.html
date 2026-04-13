@@ -28,86 +28,91 @@
         </div>
     </nav>
 
-    <main class="container py-5 mt-4">
-        <section class="py-5">
-            <h1 class="mb-4">Publications</h1>
-            <p class="lead">A selected list of publications. For a complete list, see my <a href="https://scholar.google.com/citations?user=YOUR_GOOGLE_SCHOLAR_ID&hl=en" target="_blank">Google Scholar</a> profile.</p>
-            
-            <!-- CONFIGURATION: Replace YOUR_GOOGLE_SCHOLAR_ID in the link above and the JavaScript below with your actual Google Scholar profile ID -->
-            <!-- To find your ID: go to your Google Scholar profile, the ID is the string after 'user=' in the URL -->
-            
+    <header class="hero">
+        <div class="container">
+            <p class="text-uppercase text-info mb-2">Publications</p>
+            <h1 class="display-4 fw-bold">Research Publications & Works</h1>
+            <p class="lead mt-3">A collection of published works, manuscripts, and research contributions in pathogen genomics and antimicrobial resistance.</p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <section class="py-4">
             <div class="row mt-4 g-4">
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
+                    <div class="card border-0 shadow-sm h-100">
                         <div class="card-body text-center">
-                            <h2 class="display-4 mb-0" id="total-citations" data-value="0">0</h2>
+                            <h2 class="display-4 mb-0 text-primary" id="total-citations">0</h2>
                             <p class="text-muted">Total Citations</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
+                    <div class="card border-0 shadow-sm h-100">
                         <div class="card-body text-center">
-                            <h2 class="display-4 mb-0" id="h-index" data-value="0">0</h2>
+                            <h2 class="display-4 mb-0 text-primary" id="h-index">0</h2>
                             <p class="text-muted">h-index</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
+                    <div class="card border-0 shadow-sm h-100">
                         <div class="card-body text-center">
-                            <h2 class="display-4 mb-0" id="i10-index" data-value="0">0</h2>
+                            <h2 class="display-4 mb-0 text-primary" id="i10-index">0</h2>
                             <p class="text-muted">i10-index</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <p class="text-muted mt-3 text-center">Metrics automatically updated from Google Scholar</p>
-            
-            <script>
-            async function updateScholarMetrics() {
-                const PROFILE_ID = 'YOUR_SCHOLAR_ID';
-                
-                try {
-                    const response = await fetch('https://r.jina.ai/http://scholar.google.com/citations?user=' + PROFILE_ID + '&hl=en');
-                    const html = await response.text();
-                    
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    
-                    const cells = doc.querySelectorAll('td');
-                    cells.forEach(cell => {
-                        const text = cell.textContent;
-                        if (text.includes('Citations') || text.includes('Total')) {
-                            const valueCell = cell.nextElementSibling;
-                            if (valueCell) {
-                                document.getElementById('total-citations').textContent = valueCell.textContent;
-                            }
-                        }
-                        if (text.includes('h-index') && !text.includes('i10') && !text.includes('Total')) {
-                            const valueCell = cell.nextElementSibling;
-                            if (valueCell) {
-                                document.getElementById('h-index').textContent = valueCell.textContent;
-                            }
-                        }
-                        if (text.includes('i10-index')) {
-                            const valueCell = cell.nextElementSibling;
-                            if (valueCell) {
-                                document.getElementById('i10-index').textContent = valueCell.textContent;
-                            }
-                        }
-                    });
-                } catch (e) {
-                    console.log('Could not fetch Google Scholar metrics automatically. Edit this file to update manually.');
-                }
-            }
-            
-            updateScholarMetrics();
-            </script>
-            
-            <h2 class="mt-5">Selected Publications</h2>
-            <p class="text-muted">Add your publications here...</p>
+            <p class="text-muted mt-3 text-center small">Metrics from Google Scholar. <a href="https://scholar.google.com/citations?user=YOUR_GOOGLE_SCHOLAR_ID&hl=en" target="_blank">View Profile</a></p>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Peer-Reviewed Publications</h2>
+            <p class="text-muted">Coming soon - publications are being prepared for submission.</p>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Research Dissertations & Theses</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">MSc Dissertation</span>
+                            <h3>Metagenomic Analysis of Enteric Pathogens</h3>
+                            <p class="mb-2">Metagenomic analysis of enteric pathogens in children at the CSCom in Yirimadjo, Bamako.</p>
+                            <p class="text-muted small mb-2">African Center of Excellence (ACE), Bamako, Mali • 2024</p>
+                            <a href="#" class="btn btn-outline-dark btn-sm">View Document</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <span class="badge bg-success mb-2">PharmD Thesis</span>
+                            <h3>Antibiotic Resistance in E. coli and Salmonella</h3>
+                            <p class="mb-2">Antibiotic resistance profiles of Escherichia coli and Salmonella spp. isolated from enteric infections in children.</p>
+                            <p class="text-muted small mb-2">USTTB, Faculty of Pharmacy, Bamako • 2022</p>
+                            <a href="#" class="btn btn-outline-dark btn-sm">View Document</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Manuscripts Under Preparation</h2>
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h3>Antimicrobial Resistance Patterns in Enteric Pathogens from Mali</h3>
+                    <p class="text-muted">Manuscript in preparation for submission to PLoS ONE or BMC Infectious Diseases.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Conference Proceedings</h2>
+            <p class="text-muted">Conference proceedings coming soon.</p>
         </section>
     </main>
 
