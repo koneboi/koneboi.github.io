@@ -50,6 +50,12 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.card-img-top {
+    height: 190px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 .card-body {
     font-size: 18px;
 }
