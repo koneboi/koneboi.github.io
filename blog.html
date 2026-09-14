@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | Boi Kone</title>
+    <meta name="description" content="Real-data research notes on pathogen genomics, antimicrobial resistance and machine learning.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -11,8 +12,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">Boi Kone</a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -24,32 +24,186 @@
                     <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link" href="wet_labs.html">Wet Labs</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="blog.html">Blog</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <header class="hero">
+    <header class="hero py-5">
         <div class="container">
-            <p class="text-uppercase text-info mb-2">Blog</p>
-            <h1 class="display-4 fw-bold">Research Notes & Updates</h1>
-            <p class="lead mt-3">Thoughts on pathogen genomics, antimicrobial resistance, bioinformatics, and science in Africa.</p>
+            <h1 class="display-4 fw-bold">Research Notes &amp; Updates</h1>
+            <p class="lead">Real-data notes from ongoing pathogen-genomics, machine-learning and antimicrobial-resistance work &mdash; every project linked to its repository and live result.</p>
         </div>
     </header>
 
-    <main>
-        
-</main>
-
-        
+    <main class="container py-5">
+        <section class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/clinical-ml-prediction" target="_blank" aria-label="Clinical ML Prediction (Heart Disease)">
+                            <img src="https://raw.githubusercontent.com/koneboi/clinical-ml-prediction/main/output/real_3_roc.png" class="card-img-top" alt="Clinical ML Prediction (Heart Disease)">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Clinical ML</span>
+                            <h3 class="h5">Clinical ML Prediction (Heart Disease)</h3>
+                            <p class="small mb-2">Heart-disease risk from 303 real UCI Cleveland patients (10-variable set) &mdash; logistic regression and Random Forest, 5-fold CV.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>LR ACC 0.87 &middot; AUC 0.951</li>
+<li>RF ACC 0.90 &middot; AUC 0.955</li>
+<li>5-fold CV RF AUC 0.911 &plusmn; 0.024</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/clinical-ml-prediction" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/structural-variant-effects" target="_blank" aria-label="Structural Variant Effects (TP53)">
+                            <img src="https://raw.githubusercontent.com/koneboi/structural-variant-effects/main/output/real_burial_landscape.png" class="card-img-top" alt="Structural Variant Effects (TP53)">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-danger mb-2">Structural Variants</span>
+                            <h3 class="h5">Structural Variant Effects (TP53)</h3>
+                            <p class="small mb-2">AlphaFold-informed scoring of 13 real TP53 missense variants by residue burial and amino-acid class change.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>ROC-AUC 1.00 on real variants</li>
+<li>R175H / R248W / R249S graded disruptive</li>
+<li>393-residue burial landscape</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/structural-variant-effects" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/kaggle-hour-challenge" target="_blank" aria-label="Hour Challenge (Cleveland)">
+                            <img src="https://raw.githubusercontent.com/koneboi/kaggle-hour-challenge/main/output/real_confusion.png" class="card-img-top" alt="Hour Challenge (Cleveland)">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-warning text-dark mb-2">Kaggle / ML</span>
+                            <h3 class="h5">Hour Challenge (Cleveland)</h3>
+                            <p class="small mb-2">One-hour, time-boxed Kaggle-style challenge on the same Cleveland set &mdash; how far a clean CV pipeline goes in 60 minutes.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>Test ACC 0.833 &middot; AUC 0.916</li>
+<li>Feature-selected Random Forest</li>
+<li>Risk-factor attribution</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/kaggle-hour-challenge" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/amr-wgs-typing" target="_blank" aria-label="AMR WGS Typing">
+                            <img src="https://raw.githubusercontent.com/koneboi/amr-wgs-typing/main/output/real_amr_heatmap.png" class="card-img-top" alt="AMR WGS Typing">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-secondary mb-2">AMR / WGS</span>
+                            <h3 class="h5">AMR WGS Typing</h3>
+                            <p class="small mb-2">WGS-based AMR-gene and serotype screening across real bacterial isolates via blastn reference search.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>blaTEM / blaCTX-M / mecA / vanA</li>
+<li>Species-aware AMR calls</li>
+<li>Real isolate data</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/amr-wgs-typing" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/metagenomics-16s-pipeline" target="_blank" aria-label="16S Metagenomics Pipeline">
+                            <img src="https://raw.githubusercontent.com/koneboi/metagenomics-16s-pipeline/main/output/real_genus_heatmap.png" class="card-img-top" alt="16S Metagenomics Pipeline">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-info mb-2">Metagenomics</span>
+                            <h3 class="h5">16S Metagenomics Pipeline</h3>
+                            <p class="small mb-2">16S rRNA analysis of real gut-community Illumina reads &mdash; OTU picking, alpha diversity, genus-level profiles.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>300&ndash;869 OTUs per sample</li>
+<li>Genus-level community structure</li>
+<li>QIIME-style workflow</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/metagenomics-16s-pipeline" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/amr-surveillance-dashboard" target="_blank" aria-label="AMR Surveillance Dashboard">
+                            <img src="https://raw.githubusercontent.com/koneboi/amr-surveillance-dashboard/main/output/choropleth_E_coli_latest.png" class="card-img-top" alt="AMR Surveillance Dashboard">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-success mb-2">Dashboard</span>
+                            <h3 class="h5">AMR Surveillance Dashboard</h3>
+                            <p class="small mb-2">Interactive AMR surveillance dashboard with country-level prevalence views over real reporting data.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>Latest-prevalence choropleth</li>
+<li>Country filtering &amp; rankings</li>
+<li>E. coli / MRSA views</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/amr-surveillance-dashboard" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/plasmid-typing" target="_blank" aria-label="Plasmid Replicon Typing">
+                            <img src="https://raw.githubusercontent.com/koneboi/plasmid-typing/main/output/real_replicon_counts.png" class="card-img-top" alt="Plasmid Replicon Typing">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Plasmid / AMR</span>
+                            <h3 class="h5">Plasmid Replicon Typing</h3>
+                            <p class="small mb-2">Replicon-family typing of real plasmid-carrying enteric isolates, linking AMR genes to mobile elements.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>IncFIA/IncFII, Col156/ColRNAI</li>
+<li>Replicon counts per isolate</li>
+<li>AMR&ndash;replicon linkage</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/plasmid-typing" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-secondary mb-2">Snakemake / WGS</span>
+                            <h3 class="h5">Pathogen Genomics Workflow (Snakemake)</h3>
+                            <p class="small mb-2">Reproducible end-to-end pathogen WGS workflow &mdash; reads, mapping, variant calling, AMR screen via Snakemake.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+<li>3 real E. coli isolates</li>
+<li>DRR002054 / DRR021777 / DRR021782</li>
+<li>Config-driven, DAG-reproducible</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://github.com/koneboi/pathogen-snakemake-workflow" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
     </main>
 
     <footer class="bg-dark text-center text-light py-4 mt-5">
-        <p class="mb-0">&copy; 2026 Boi Kone &bull; Pharmacist &amp; Research Scientist &bull; Bamako, Mali</p>
+        <p class="mb-0">Copyleft &copy; 2026 Boi Kone &middot; Pharmacist &amp; Research Scientist &middot; Bamako, Mali</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
-
 </html>
