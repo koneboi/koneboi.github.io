@@ -1,151 +1,502 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portfolio — Boi Kone | Pharmacist & Research Scientist</title>
-<meta name="description" content="Portfolio of Boi Kone — real, reproducible bioinformatics, machine learning and mathematical-modelling projects for AMR surveillance and infectious disease.">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Boi Kone</title>
+    <meta name="description" content="Bioinformatics, genomics, machine learning and infectious-disease modelling projects by Boi Kone — code, pipelines and real-data results.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">Boi Kone</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="nav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-        <li class="nav-item"><a class="nav-link active" href="portfolio.html">Portfolio</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<main>
-<section class="py-5">
-  <div class="container">
-    <h1 class="h2">Projects &amp; Code</h1>
-    <p class="lead">Reproducible pipelines and models for pathogen genomics, AMR surveillance and infectious-disease epidemiology — each applied to real public datasets.</p>
-  </div>
-</section>
-<section class="py-5 bg-light">
-  <div class="container">
-    <h2>GitHub Repositories</h2>
-    <p class="small text-muted">All repositories are publicly available. Visit my <a href="https://github.com/koneboi">GitHub profile</a> for the complete list, or browse directly:</p>
-    <div class="row g-4 mt-3">
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">ML</span>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Boi Kone</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="publications.html">Publications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="talks.html">Talks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="training.html">Training</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="wet_labs.html">Wet Labs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                </ul>
             </div>
-            <h3 class="h6 fw-bold">Clinical ML Prediction (Cleveland)</h3>
-            <p class="small text-muted">Heart-disease risk prediction from 303 UCI Cleveland patients (kept real, 10-variable set).</p>
-            <ul class="small mb-3"><li>LR ACC 0.87 / AUC 0.951 · RF ACC 0.90 / AUC 0.955 (best)</li><li>Top features: ca, thal, cp, oldpeak, thalach</li><li>5-fold CV RF AUC 0.911 ± 0.024</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/clinical-ml-prediction" target="_blank" rel="noopener">View repository</a>
-          </div>
         </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">AlphaFold / Structural</span>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <p class="text-uppercase text-info mb-2">Portfolio</p>
+            <h1 class="display-4 fw-bold">Projects &amp; Code</h1>
+            <p class="lead mt-3">Reproducible pipelines and models for pathogen genomics, AMR surveillance and infectious-disease epidemiology — each applied to real public datasets.</p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+
+        <section class="py-4">
+            <h2 class="mb-4">Bioinformatics &amp; Genomics</h2>
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/rnaseq-pipeline" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/rnaseq-pipeline/main/output/real_ma_plot.png" class="card-img-top" alt="RNA-seq MA plot from real GEO data">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">RNA-seq</span>
+                            <h3 class="h5">RNA-seq Differential Expression Pipeline</h3>
+                            <p class="small mb-2">RNA-seq differential expression analysis pipeline — normalisation, DE (Welch's t-test + BH), volcano, PCA, heatmap, MA plot, GSEA.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> GEO <strong>GSE52778</strong> (dexamethasone vs control, human airway smooth muscle)</li>
+                                <li><strong>197 DE genes</strong> — 135 up / 62 down (FTL, COL1A2, PER1&hellip;)</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/rnaseq-pipeline" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/rnaseq-pipeline/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/single-cell-bioinformatics" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/single-cell-bioinformatics/main/output/real_umap_annotated.png" class="card-img-top" alt="UMAP of PBMC3k single-cell dataset">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-success mb-2">Single-Cell</span>
+                            <h3 class="h5">Single-Cell RNA-seq Analysis (scanpy)</h3>
+                            <p class="small mb-2">Single-cell RNA-seq analysis pipeline (scanpy) — QC, normalization, HVG, PCA, Leiden clustering, marker detection, annotation, trajectory.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> 10x Genomics <strong>PBMC3k</strong> (2,638 cells &times; 13,656 genes)</li>
+                                <li><strong>6 cell types</strong> recovered by markers (CD79A, NKG7, PPBP, LYZ&hellip;)</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/single-cell-bioinformatics" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/single-cell-bioinformatics/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/phylogenetics-pipeline" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/phylogenetics-pipeline/main/output/real_tree.png" class="card-img-top" alt="Phylogenetic tree from real 16S rRNA sequences">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-warning text-dark mb-2">Phylogenetics</span>
+                            <h3 class="h5">Phylogenetics Analysis Pipeline</h3>
+                            <p class="small mb-2">Phylogenetic analysis pipeline — MSA (MAFFT), distance matrices &amp; NJ trees, molecular evolution (dN/dS), recombination-aware workflows, visualisation.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> <strong>29 NCBI 16S rRNA</strong> sequences</li>
+                                <li>Monophyletic groups: Actinobacteria &amp; &alpha;/&gamma;-Proteobacteria purity = 1.0</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/phylogenetics-pipeline" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/phylogenetics-pipeline/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/phylodynamic-analysis" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/phylodynamic-analysis/main/output/real_root_to_tip.png" class="card-img-top" alt="Root-to-tip molecular clock regression for SARS-CoV-2">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-info mb-2">Phylodynamics</span>
+                            <h3 class="h5">Phylodynamic Analysis of Pathogens</h3>
+                            <p class="small mb-2">Phylodynamic analysis of pathogens — molecular clock dating (root-to-tip), coalescent skyline population growth, lineage growth, AMR clade expansion timing.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> <strong>22 SARS-CoV-2</strong> complete genomes (2020–2026)</li>
+                                <li>Clock rate <strong>1.25&times;10&#8315;&#179;</strong> subs/site/yr (published range)</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/phylodynamic-analysis" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/phylodynamic-analysis/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/bacterial-gwas" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/bacterial-gwas/main/output/real_manhattan_plot.png" class="card-img-top" alt="Manhattan plot of bacterial GWAS hits">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">GWAS</span>
+                            <h3 class="h5">Bacterial GWAS Pipeline</h3>
+                            <p class="small mb-2">Bacterial GWAS pipeline — SNP matrix construction, population structure (PCA/FST), logistic-regression association testing, Manhattan/QQ plots, candidate genes.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> <em>S. pneumoniae</em> (Maela, Thailand) — 100 isolates &times; 5,000 SNPs</li>
+                                <li><strong>706 FDR</strong> / 5 Bonferroni hits, &lambda;<sub>GC</sub>=2.9</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/bacterial-gwas" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/bacterial-gwas/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/malaria-genetics" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/malaria-genetics/main/output/real_fst_country_heatmap.png" class="card-img-top" alt="Pairwise FST heatmap for Plasmodium falciparum populations">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-danger mb-2">Malaria Genetics</span>
+                            <h3 class="h5">Malaria Genetics &amp; Population Studies</h3>
+                            <p class="small mb-2">Malaria genetics &amp; population studies — drug resistance markers (pfcrt, pfkelch13), FST/population genetics, transmission clusters, spatial epidemiology.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> MalariaGEN <strong>Pf3k</strong> — 2,640 isolates, 15 countries</li>
+                                <li>Mean F<sub>ST</sub> Africa vs SE Asia = <strong>0.107</strong> (Mali&ndash;Cambodia 0.198)</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/malaria-genetics" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/malaria-genetics/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <h3 class="h6 fw-bold">Protein Variant Effect Prediction (TP53)</h3>
-            <p class="small text-muted">Pathogenicity of 13 real TP53 missense variants scored against AlphaFold-defined residue burial and AA change.</p>
-            <ul class="small mb-3"><li>ROC-AUC 1.00 on 13 curated ClinVar TP53 variants</li><li>R175H/R248W/R249S/R273H all deep-buried → disruptive</li><li>Uniform Manifold across 393 residues of AF-P04637-F1</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/structural-variant-effects" target="_blank" rel="noopener">View repository</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">Kaggle / ML</span>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Machine Learning &amp; Deep Learning</h2>
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/machine-learning-portfolio" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/machine-learning-portfolio/main/output/real_01_confusion_matrices.png" class="card-img-top" alt="Confusion matrices for cancer classification">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">ML</span>
+                            <h3 class="h5">Machine Learning Portfolio</h3>
+                            <p class="small mb-2">Machine learning portfolio — classification, regression, clustering, time-series forecasting (scikit-learn, XGBoost, PyTorch) with validation and tuning.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> Breast cancer <strong>98.3%</strong> accuracy; Housing R&sup2;=&nbsp;0.83</li>
+                                <li>Wine clustering ARI = 0.90; SARIMA forecasting MAPE &sim;7%</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/machine-learning-portfolio" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/machine-learning-portfolio/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/deep-learning-bio" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/deep-learning-bio/main/output/real_01_dna_splice_confusion_matrix.png" class="card-img-top" alt="Confusion matrix of splice-site CNN">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-danger mb-2">DL</span>
+                            <h3 class="h5">Deep Learning for Biology</h3>
+                            <p class="small mb-2">Deep learning applied to biology — DNA classification (1D-CNN), protein function (MLP), gene-expression variational autoencoder, molecular graph neural network.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> UCI splice-junction CNN <strong>96.2%</strong>; PROTEINS 73.5%</li>
+                                <li>MUTAG molecular GNN 79%; Golub-leukemia VAE</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/deep-learning-bio" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/deep-learning-bio/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <h3 class="h6 fw-bold">Kaggle Hour Challenge (Cleveland)</h3>
-            <p class="small text-muted">Same UCI Cleveland data under a 1-hour time-boxed challenge — CV-selected Random Forest.</p>
-            <ul class="small mb-3"><li>Test ACC 0.833 · AUC 0.910 · F1 0.808</li><li>Features: thal, ca, oldpeak, thalach, exang</li><li>60/20/20 stratified split (178/59/60)</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/kaggle-hour-challenge" target="_blank" rel="noopener">View repository</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">Snakemake / Real WGS</span>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Mathematical Modelling — AMR &amp; Infectious Disease</h2>
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/sir-seir-models" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/sir-seir-models/main/output/05_real_fitted_curve.png" class="card-img-top" alt="SIR model fitted to real COVID-19 incidence">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-success mb-2">Epidemiology</span>
+                            <h3 class="h5">Infectious Disease Compartmental Models (SIR/SEIR)</h3>
+                            <p class="small mb-2">Infectious disease compartmental models (SIR/SEIR/SEIRD) for epidemic modelling — R0, vaccination impact, sensitivity analysis, parameter fitting (Mali/West Africa context).</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> JHU COVID-19, Italy first wave (2020)</li>
+                                <li>Fitted <strong>R0&nbsp;=&nbsp;2.01</strong> [1.99&ndash;2.03]; empirical R0&nbsp;=&nbsp;2.62</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/sir-seir-models" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/sir-seir-models/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/amr-transmission-model" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/amr-transmission-model/main/output/05_real_amr_regional_landscape.png" class="card-img-top" alt="Real AMR resistance landscape">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-danger mb-2">AMR</span>
+                            <h3 class="h5">AMR Transmission &amp; Antibiotic Selection Dynamics</h3>
+                            <p class="small mb-2">AMR transmission &amp; antibiotic selection dynamics — resistant vs susceptible competition, fitness cost of resistance, pharmacodynamic (Hill) pressure, stewardship strategies.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> WHO GLASS / OWID, 111 countries (2016&ndash;2022)</li>
+                                <li><em>E. coli</em> 3rd-gen cephalosporin resistance: <strong>45.7%</strong> global mean</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/amr-transmission-model" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/amr-transmission-model/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/malaria-transmission-model" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/malaria-transmission-model/main/output/05_mali_incidence_trend.png" class="card-img-top" alt="Malaria incidence trend in Mali from WHO data">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-info mb-2">Malaria</span>
+                            <h3 class="h5">Malaria Transmission Dynamics (Ross-MacDonald &amp; SEIR-SEI)</h3>
+                            <p class="small mb-2">Malaria transmission dynamics (Ross-MacDonald &amp; SEIR-SEI) and control measures for the Sahel, Mali — seasonality, EIR/R0, ITN/IRS impact, seasonal chemoprevention.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> WHO/OWID Mali incidence 2000&ndash;2024</li>
+                                <li>Implied <strong>R0&nbsp;&asymp;&nbsp;27.5</strong>; 21.5% incidence decline</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/malaria-transmission-model" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/malaria-transmission-model/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-warning text-dark mb-2">Training</span>
+                            <h3 class="h5">DEGAiN Workshop — Bacterial Genomics Training Materials</h3>
+                            <p class="small mb-2">DEGAiN Workshop training materials — bacterial phylogenetics, recombination detection, GWAS &amp; machine learning for AMR surveillance (Modules 1 &amp; 2).</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>Hands-on notebooks, lecture slides &amp; curated datasets</li>
+                                <li>Delivered with the GHRU Genomic Surveillance of AMR network (Ibadan, Nigeria)</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/degain-workshop" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <h3 class="h6 fw-bold">Pathogen Genomics Snakemake Workflow</h3>
-            <p class="small text-muted">Reproducible end-to-end pathogen WGS pipeline: real reads, mapping, variant calling, consensus, AMR-gene screening.</p>
-            <ul class="small mb-3"><li>3 real E. coli isolates DRR002054 / DRR021777 / DRR021782</li><li>bwa mem → bcftools mpileup/call → blastn AMR screen</li><li>All steps via config-driven Snakemake rules</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/pathogen-snakemake-workflow" target="_blank" rel="noopener">View repository</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">AMR / Genomics</span>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">GitHub Repositories</h2>
+            <p class="text-muted">All repositories are publicly available. Visit my <a href="https://github.com/koneboi" target="_blank">GitHub profile</a> for the complete list, or browse directly:</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="https://github.com/koneboi/rnaseq-pipeline" target="_blank" class="btn btn-outline-dark btn-sm">rnaseq-pipeline</a>
+                <a href="https://github.com/koneboi/single-cell-bioinformatics" target="_blank" class="btn btn-outline-dark btn-sm">single-cell-bioinformatics</a>
+                <a href="https://github.com/koneboi/phylogenetics-pipeline" target="_blank" class="btn btn-outline-dark btn-sm">phylogenetics-pipeline</a>
+                <a href="https://github.com/koneboi/phylodynamic-analysis" target="_blank" class="btn btn-outline-dark btn-sm">phylodynamic-analysis</a>
+                <a href="https://github.com/koneboi/bacterial-gwas" target="_blank" class="btn btn-outline-dark btn-sm">bacterial-gwas</a>
+                <a href="https://github.com/koneboi/malaria-genetics" target="_blank" class="btn btn-outline-dark btn-sm">malaria-genetics</a>
+                <a href="https://github.com/koneboi/machine-learning-portfolio" target="_blank" class="btn btn-outline-dark btn-sm">machine-learning-portfolio</a>
+                <a href="https://github.com/koneboi/deep-learning-bio" target="_blank" class="btn btn-outline-dark btn-sm">deep-learning-bio</a>
+                <a href="https://github.com/koneboi/sir-seir-models" target="_blank" class="btn btn-outline-dark btn-sm">sir-seir-models</a>
+                <a href="https://github.com/koneboi/amr-transmission-model" target="_blank" class="btn btn-outline-dark btn-sm">amr-transmission-model</a>
+                <a href="https://github.com/koneboi/malaria-transmission-model" target="_blank" class="btn btn-outline-dark btn-sm">malaria-transmission-model</a>
+                <a href="https://github.com/koneboi/degain-workshop" target="_blank" class="btn btn-outline-dark btn-sm">degain-workshop</a>
             </div>
-            <h3 class="h6 fw-bold">AMR WGS Typing</h3>
-            <p class="small text-muted">WGS-based AMR gene typing & serotype prediction across real bacterial isolates.</p>
-            <ul class="small mb-3"><li>Identifies blaTEM, blaCTX-M, mecA, vanA & more</li><li>AMR gene + species control over public DBs</li><li>Real reads, blastn + makeblastdb references</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/amr-wgs-typing" target="_blank" rel="noopener">View repository</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">Metagenomics</span>
-            </div>
-            <h3 class="h6 fw-bold">Metagenomics 16S rRNA Pipeline</h3>
-            <p class="small text-muted">16S rRNA amplicon pipeline on real Illumina MiSeq gut community samples (V4).</p>
-            <ul class="small mb-3"><li>~4,000–19k reads/sample; 300–869 OTUs (QIIME-style)</li><li>Phylum + genus-level community profiles</li><li>Reproducible, config-driven</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/metagenomics-16s-pipeline" target="_blank" rel="noopener">View repository</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">Dashboard / Surveillance</span>
-            </div>
-            <h3 class="h6 fw-bold">AMR Surveillance Dashboard</h3>
-            <p class="small text-muted">Interactive AMR surveillance dashboard fed by real sample-level testing data.</p>
-            <ul class="small mb-3"><li>Latest-country AMR prevalence + global mean views</li><li>Tested-sample vs population caveats called out</li><li>Filter by species / antibiotic class</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/amr-surveillance-dashboard" target="_blank" rel="noopener">View repository</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm project-card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-primary">Plasmid / AMR</span>
-            </div>
-            <h3 class="h6 fw-bold">Plasmid Replicon Typing</h3>
-            <p class="small text-muted">Replicon family detection + AMR-gene linkage across real plasmid-carrying enteric isolates.</p>
-            <ul class="small mb-3"><li>Detected IncFIA/IncFII, Col156, ColRNAI rep groups</li><li>E. coli JJ1886 (ST131) + Enterococcus V583</li><li>AMR genes co-localized per isolate</li></ul>
-            <a class="btn btn-sm btn-outline-primary" href="https://github.com/koneboi/plasmid-typing" target="_blank" rel="noopener">View repository</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-</main>
-<footer class="py-4 bg-dark text-center text-white small">
-  <div class="container">© 2026 Boi Kone · Pharmacist &amp; Research Scientist · Bamako, Mali</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/clinical-ml-prediction" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/clinical-ml-prediction/main/output/real_top.png" class="card-img-top" alt="Clinical ML Prediction (Cleveland)">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Machine Learning</span>
+                            <h3 class="h5">Clinical ML Prediction (Cleveland)</h3>
+                            <p class="small mb-2">Heart-disease risk prediction from 303 UCI Cleveland patients (kept real, 10-variable set).</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>LR ACC 0.87 / AUC 0.951 &middot; RF ACC 0.90 / AUC 0.955 (best)</li><li>Top features: ca, thal, cp, oldpeak, thalach</li><li>5-fold CV RF AUC 0.911 &plusmn; 0.024</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/clinical-ml-prediction" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/clinical-ml-prediction/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                <a href='https://colab.research.google.com/github/koneboi/clinical-ml-prediction/blob/main/notebooks/clinical_ml_prediction.ipynb' target='_blank' class='btn btn-outline-primary btn-sm'>Open in Colab</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/structural-variant-effects" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/structural-variant-effects/main/output/real_top.png" class="card-img-top" alt="Protein Variant Effect Prediction (TP53)">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">AlphaFold / Structural</span>
+                            <h3 class="h5">Protein Variant Effect Prediction (TP53)</h3>
+                            <p class="small mb-2">Pathogenicity of 13 real TP53 missense variants scored against AlphaFold-defined residue burial and AA change.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>ROC-AUC <strong>1.00</strong> on 13 curated ClinVar TP53 variants</li><li>R175H/R248W/R249S/R273H all deep-buried &rarr; disruptive</li><li>Uniform Manifold across 393 residues of AF-P04637-F1</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/structural-variant-effects" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/structural-variant-effects/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                <a href='https://colab.research.google.com/github/koneboi/structural-variant-effects/blob/main/notebooks/predict_variant_effects.ipynb' target='_blank' class='btn btn-outline-primary btn-sm'>Open in Colab</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/kaggle-hour-challenge" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/kaggle-hour-challenge/main/output/real_top.png" class="card-img-top" alt="Kaggle Hour Challenge (Cleveland)">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Kaggle / ML</span>
+                            <h3 class="h5">Kaggle Hour Challenge (Cleveland)</h3>
+                            <p class="small mb-2">Same UCI Cleveland data under a 1-hour time-boxed challenge — CV-selected Random Forest.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>Test ACC 0.833 &middot; AUC 0.910 &middot; F1 0.808</li><li>Features: thal, ca, oldpeak, thalach, exang</li><li>60/20/20 stratified split (178/59/60)</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/kaggle-hour-challenge" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/kaggle-hour-challenge/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                <a href='https://colab.research.google.com/github/koneboi/kaggle-hour-challenge/blob/main/notebooks/kaggle_hour_challenge.ipynb' target='_blank' class='btn btn-outline-primary btn-sm'>Open in Colab</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/pathogen-snakemake-workflow" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/pathogen-snakemake-workflow/main/output/real_top.png" class="card-img-top" alt="Pathogen Genomics Snakemake Workflow">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Snakemake / Real WGS</span>
+                            <h3 class="h5">Pathogen Genomics Snakemake Workflow</h3>
+                            <p class="small mb-2">Reproducible end-to-end pathogen WGS pipeline: real reads, mapping, variant calling, consensus, AMR-gene screening.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>3 real E. coli isolates DRR002054 / DRR021777 / DRR021782</li><li>bwa mem &rarr; bcftools mpileup/call &rarr; blastn AMR screen</li><li>All steps via config-driven Snakemake rules</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/pathogen-snakemake-workflow" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/pathogen-snakemake-workflow/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/amr-wgs-typing" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/amr-wgs-typing/main/output/real_top.png" class="card-img-top" alt="AMR WGS Typing">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">AMR / Genomics</span>
+                            <h3 class="h5">AMR WGS Typing</h3>
+                            <p class="small mb-2">WGS-based AMR gene typing &amp; serotype prediction across real bacterial isolates.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>Identifies blaTEM, blaCTX-M, mecA, vanA &amp; more</li><li>AMR gene + species control over Viper</li><li>Real reads, blastn + makeblastdb references</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/amr-wgs-typing" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/amr-wgs-typing/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/metagenomics-16s-pipeline" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/metagenomics-16s-pipeline/main/output/real_top.png" class="card-img-top" alt="Metagenomics 16S rRNA Pipeline">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Metagenomics</span>
+                            <h3 class="h5">Metagenomics 16S rRNA Pipeline</h3>
+                            <p class="small mb-2">16S rRNA amplicon pipeline on real Illumina MiSeq gut community samples (V4).</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>~4,000–19k reads/sample; 300–869 OTUs (QIIME-style)</li><li>Phylum + genus-level community profiles</li><li>Pipette-tolerant, reproducible config</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/metagenomics-16s-pipeline" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/metagenomics-16s-pipeline/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/amr-surveillance-dashboard" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/amr-surveillance-dashboard/main/output/real_top.png" class="card-img-top" alt="AMR Surveillance Dashboard">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Dashboard / Surveillance</span>
+                            <h3 class="h5">AMR Surveillance Dashboard</h3>
+                            <p class="small mb-2">Interactive AMR surveillance dashboard fed by real sample-level testing data.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>Latest-country AMR prevalence + global mean views</li><li>Tested-sample vs population caveats called out</li><li>Filter by species / antibiotic class</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/amr-surveillance-dashboard" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/amr-surveillance-dashboard/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/plasmid-typing" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/plasmid-typing/main/output/real_top.png" class="card-img-top" alt="Plasmid Replicon Typing">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">Plasmid / AMR</span>
+                            <h3 class="h5">Plasmid Replicon Typing</h3>
+                            <p class="small mb-2">Replicon family detection + AMR-gene linkage across real plasmid-carrying enteric isolates.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li>Detected IncFIA/IncFII, Col156, ColRNAI, rep groups</li><li>E. coli JJ1886 (ST131) + Enterococcus V583</li><li>AMR genes co-localized per isolate</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/plasmid-typing" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href='https://github.com/koneboi/plasmid-typing/blob/main/RESULTS.md' target='_blank' class='btn btn-outline-dark btn-sm'>Results</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-center text-light py-4 mt-5">
+        <p class="mb-0">&copy; 2026 Boi Kone &bull; Pharmacist &amp; Research Scientist &bull; Bamako, Mali</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
