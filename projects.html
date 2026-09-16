@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Boi Kone</title>
+    <meta name="description" content="Selected projects by Boi Kone — competition results, machine learning for health, genomics and bioinformatics pipelines.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Boi Kone</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="publications.html">Publications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="talks.html">Talks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="training.html">Training</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="projects.html">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="wet_labs.html">Wet Labs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <p class="text-uppercase text-info mb-2">Projects</p>
+            <h1 class="display-4 fw-bold">Featured Projects</h1>
+            <p class="lead mt-3">Machine learning for medical imaging, genomics and infectious-disease modelling — with real-data results and competitive rankings.</p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+
+        <section class="py-4">
+            <h2 class="mb-4">Machine Learning &amp; Medical Imaging</h2>
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://koneboi.github.io/dat-parkinsons/" target="_blank">
+                            <div class="card-img-top bg-dark text-center py-5">
+                                <span class="badge bg-info fs-5">DaT Parkinson's Challenge</span>
+                            </div>
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-info mb-2">Deep Learning &bull; Medical Imaging</span>
+                            <h3 class="h5">DaT Parkinson's Challenge — Bayesian Ensemble</h3>
+                            <p class="small mb-2">13-member deep learning ensemble (2D MIP-CNN + 3D volume CNN) for normal vs abnormal dopamine transporter (DaT) scan classification, with anatomy-aligned preprocessing and Platt-scaled z-score model averaging.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Competition</span> Hosted by the French Society of Nuclear Medicine (SFMN) on DrivenData</li>
+                                <li><strong>Rank #28 of 361</strong> &mdash; private test log loss <strong>0.2472</strong></li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://koneboi.github.io/dat-parkinsons/" target="_blank" class="btn btn-dark btn-sm">Project Page</a>
+                                <a href="https://github.com/koneboi/dat-parkinsons" target="_blank" class="btn btn-outline-dark btn-sm">Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/machine-learning-portfolio" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/machine-learning-portfolio/main/output/real_01_confusion_matrices.png" class="card-img-top" alt="Confusion matrices for cancer classification">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">ML</span>
+                            <h3 class="h5">Machine Learning Portfolio</h3>
+                            <p class="small mb-2">Classification, regression, clustering and time-series forecasting (scikit-learn, XGBoost, PyTorch) with validation and tuning on real datasets.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> Breast cancer <strong>98.3%</strong>; Housing R&sup2;=&nbsp;0.83</li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/machine-learning-portfolio" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/machine-learning-portfolio/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/deep-learning-bio" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/deep-learning-bio/main/output/real_01_dna_splice_confusion_matrix.png" class="card-img-top" alt="Confusion matrix of splice-site CNN">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-danger mb-2">DL</span>
+                            <h3 class="h5">Deep Learning for Biology</h3>
+                            <p class="small mb-2">DNA classification (1D-CNN), protein function (MLP), gene-expression variational autoencoder and molecular graph neural networks.</p>
+                            <ul class="list-unstyled small text-muted mb-3">
+                                <li><span class="badge bg-success-subtle text-success-emphasis me-1">Real data</span> UCI splice-junction CNN <strong>96.2%</strong></li>
+                            </ul>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/deep-learning-bio" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/deep-learning-bio/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Bioinformatics &amp; Genomics</h2>
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/rnaseq-pipeline" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/rnaseq-pipeline/main/output/real_ma_plot.png" class="card-img-top" alt="RNA-seq MA plot from real GEO data">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">RNA-seq</span>
+                            <h3 class="h5">RNA-seq Differential Expression Pipeline</h3>
+                            <p class="small mb-2">Normalisation, DE (Welch's t-test + BH), volcano, PCA, heatmap, MA plot, GSEA on real GEO data.</p>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/rnaseq-pipeline" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/rnaseq-pipeline/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/single-cell-bioinformatics" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/single-cell-bioinformatics/main/output/real_umap_annotated.png" class="card-img-top" alt="UMAP of PBMC3k single-cell dataset">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-success mb-2">Single-Cell</span>
+                            <h3 class="h5">Single-Cell RNA-seq Analysis (scanpy)</h3>
+                            <p class="small mb-2">QC, normalization, HVG, PCA, Leiden clustering, marker detection, annotation and trajectory analysis.</p>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/single-cell-bioinformatics" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/single-cell-bioinformatics/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/bacterial-gwas" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/bacterial-gwas/main/output/real_manhattan_plot.png" class="card-img-top" alt="Manhattan plot of bacterial GWAS hits">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-primary mb-2">GWAS</span>
+                            <h3 class="h5">Bacterial GWAS Pipeline</h3>
+                            <p class="small mb-2">SNP matrix construction, population structure (PCA/FST), logistic-regression association testing, Manhattan/QQ plots.</p>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/bacterial-gwas" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/bacterial-gwas/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-4">
+            <h2 class="mb-4">Mathematical Modelling — AMR &amp; Infectious Disease</h2>
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/sir-seir-models" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/sir-seir-models/main/output/05_real_fitted_curve.png" class="card-img-top" alt="SIR model fitted to real COVID-19 incidence">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-success mb-2">Epidemiology</span>
+                            <h3 class="h5">Infectious Disease Models (SIR/SEIR)</h3>
+                            <p class="small mb-2">SIR/SEIR/SEIRD epidemic modelling — R0, vaccination impact, sensitivity analysis, parameter fitting.</p>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/sir-seir-models" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/sir-seir-models/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <a href="https://github.com/koneboi/amr-transmission-model" target="_blank">
+                            <img src="https://raw.githubusercontent.com/koneboi/amr-transmission-model/main/output/05_real_amr_regional_landscape.png" class="card-img-top" alt="Real AMR resistance landscape">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-danger mb-2">AMR</span>
+                            <h3 class="h5">AMR Transmission &amp; Antibiotic Selection</h3>
+                            <p class="small mb-2">Resistant-vs-susceptible competition, fitness cost, pharmacodynamic pressure, stewardship strategies.</p>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="https://github.com/koneboi/amr-transmission-model" target="_blank" class="btn btn-dark btn-sm">Repository</a>
+                                <a href="https://github.com/koneboi/amr-transmission-model/blob/main/RESULTS.md" target="_blank" class="btn btn-outline-dark btn-sm">Results</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-dark text-center text-light py-4 mt-5">
+        <p class="mb-0">&copy; 2026 Boi Kone &bull; Pharmacist &amp; Research Scientist &bull; Bamako, Mali</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
