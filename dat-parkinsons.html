@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaT Parkinson's Challenge — Boi Kone</title>
+    <meta name="description" content="Top-28 DaT Parkinson's Challenge solution (#28/361, log loss 0.2472): 13-member Bayesian ensemble, anatomy-aligned preprocessing, Platt-scaled z-score blend. Full technical details, experiments and figures.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .project-content h1{font-size:2rem;font-weight:700;margin:1.5rem 0 .5rem}
+        .project-content h2{font-size:1.5rem;font-weight:700;margin:2rem 0 .75rem;padding-bottom:.35rem;border-bottom:2px solid #0d6efd20}
+        .project-content h3{font-size:1.15rem;font-weight:600;margin:1.25rem 0 .5rem}
+        .project-content p{margin:.5rem 0}
+        .project-content ul,.project-content ol{margin:.5rem 0 .5rem 1.2rem}
+        .project-content code{background:#f1f5f9;padding:.1rem .3rem;border-radius:4px;font-size:.85em}
+        .project-content pre{background:#0d1117;color:#c9d1d9;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.82rem}
+        .project-content pre code{background:none;padding:0;color:inherit}
+        .project-content table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem}
+        .project-content th{background:#f1f5f9;border:1px solid #dee2e6;padding:.45rem .6rem;text-align:left}
+        .project-content td{border:1px solid #dee2e6;padding:.4rem .6rem}
+        .project-content tr:nth-child(even){background:#f8fafc}
+        .project-content img{max-width:100%;height:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.12);margin:.75rem 0}
+        .project-content blockquote{border-left:4px solid #0d6efd;background:#f1f5f9;padding:.6rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+        .project-content a{color:#0d6efd}
+        .project-content hr{border:0;border-top:1px solid #dee2e6;margin:2rem 0}
+        .project-content{max-width:900px}
+        .project-content h1:first-of-type{margin-top:.5rem}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Boi Kone</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="publications.html">Publications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="talks.html">Talks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="training.html">Training</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="wet_labs.html">Wet Labs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <p class="text-uppercase text-info mb-2">Projects &middot; Machine Learning &middot; Medical Imaging</p>
+            <h1 class="display-4 fw-bold">DaT Parkinson's Challenge</h1>
+            <p class="lead mt-2">Rank <strong>#28 of 361</strong> &bull; private test log loss <strong>0.2472</strong> &bull; 13-member Bayesian ensemble with Platt-scaled z-score blending.</p>
+            <p class="mt-2">
+                <a href="https://www.drivendata.org/competitions/311/dat-parkinsons-challenge/" target="_blank" class="badge bg-dark text-decoration-none">DrivenData</a>
+                <a href="https://github.com/koneboi/dat-parkinsons" target="_blank" class="badge bg-secondary text-decoration-none">Repository</a>
+                <a href="projects.html" class="badge bg-white text-dark text-decoration-none">&larr; Projects</a>
+            </p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="project-content mx-auto">
+<h1 id="dat-parkinsons-challenge-bayesian-ensemble">DaT Parkinson's Challenge — Bayesian Ensemble</h1>
+<p><img alt="Competition" src="https://img.shields.io/badge/DrivenData-DaT%20Parkinson's%20Challenge-blue?style=flat-square" /><br />
+<img alt="Rank" src="https://img.shields.io/badge/Rank-%2328%2F361-6600cc?style=flat-square" /><br />
+<img alt="Log loss" src="https://img.shields.io/badge/Test%20log%20loss-0.2472-e11d48?style=flat-square" /><br />
+<img alt="License" src="https://img.shields.io/badge/License-MIT-success?style=flat-square" /></p>
+<p><strong>Top-28</strong> solution for the <strong>DaT Parkinson's Challenge</strong> — a DrivenData<br />
+competition hosted by the <strong>French Society of Nuclear Medicine (SFMN)</strong> with the<br />
+<strong>Health Data Hub</strong> and <strong>GaelO</strong>, part of the <em>Health Data Challenges</em> call for<br />
+projects funded by the <strong>France 2030</strong> plan.</p>
+<ul>
+<li><strong>Competition:</strong> https://www.drivendata.org/competitions/311/dat-parkinsons-challenge/</li>
+<li><strong>Best score (private test log loss):</strong> <strong>0.2472</strong></li>
+<li><strong>Current rank:</strong> <strong>#28 out of 361 participants</strong></li>
+<li><strong>Metric:</strong> log loss (error — lower is better); AUROC shown for reference only</li>
+<li><strong>Page:</strong> https://koneboi.github.io/dat-parkinsons.html</li>
+<li><strong>Registry:</strong> www.drivendata.org/competitions/311/dat-parkinsons-challenge/</li>
+</ul>
+<hr />
+<h2 id="1-problem">1. Problem</h2>
+<p>Parkinsonian syndromes affect millions of people worldwide. <strong>Dopamine<br />
+transporter (DaT) imaging</strong> helps distinguish neurodegenerative parkinsonian<br />
+syndromes from other conditions, but interpreting scans reliably requires<br />
+specialised expertise that is scarce. In France alone &gt;20,000 DaT scans are<br />
+performed each year; ~1 in 5 is hard to interpret, especially early-stage or<br />
+atypical presentations. A model that reliably distinguishes <strong>normal</strong> from<br />
+<strong>abnormal (pathologic)</strong> DaT scans could expand access to expert-level<br />
+diagnostic support and accelerate research into neurodegenerative disorders.</p>
+<p>The task is <strong>binary classification</strong>: <code>P(is_pathologic)</code> per DaT SPECT scan.<br />
+The evaluation metric is <strong>log loss</strong>, which rewards well-calibrated<br />
+probabilities — not just rank discrimination. This shapes the whole solution:<br />
+calibration is not an afterthought, it <em>is</em> the metric.</p>
+<p>Data: a unique <strong>multicentre dataset</strong> of DaT scans from <strong>10 French hospital<br />
+centres</strong>, annotated by expert nuclear-medicine readers. Each scan is a single<br />
+<strong>3D NIfTI reconstruction</strong> of 16-bit intensity voxels. Imaging parameters vary<br />
+across centres: volume dimensions (e.g. 142×142×112 or 128×128×128) and voxel<br />
+spacing (2.46–3.895 mm isotropic) differ scan-to-scan — the pipeline must not<br />
+assume a fixed input shape. Participant institutions include CHU Toulouse,<br />
+CHU Nancy, CHU Tours, CHU Brest, CHU Grenoble-Alpes, Hospices Civils de Lyon,<br />
+CHU de la Timone Marseille, Centre Jean Perrin, Centre Henri Becquerel and<br />
+Institut Godinot. Reads were performed by a panel of expert physicians and<br />
+physicians-in-training led by members of the SFMN.</p>
+<p><strong>Prize context.</strong> €25,000 total (1st €12,500 / 2nd €7,500 / 3rd €5,000).<br />
+Winners are invited to an in-person ceremony hosted by SFMN and France's Health<br />
+Data Hub, and top teams may be contacted about a further scientific<br />
+collaboration on age and sex prediction from DaT scans. Winning solutions are<br />
+released as open source. This competition was closed to public disclosure of the<br />
+winning pipeline during the competition; this write-up is published after the<br />
+deadline for reference and learning.</p>
+<hr />
+<h2 id="2-final-results">2. Final results</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Private test log loss</strong></td>
+<td><strong>0.2472</strong></td>
+</tr>
+<tr>
+<td><strong>Final rank</strong></td>
+<td><strong>#28 / 361 participants</strong></td>
+</tr>
+<tr>
+<td>OOF log loss (honest single-fold)</td>
+<td>0.2267</td>
+</tr>
+<tr>
+<td>OOF ROC AUC</td>
+<td>0.9684</td>
+</tr>
+<tr>
+<td>Training set</td>
+<td>1,362 scans (747 pathologic / 615 normal)</td>
+</tr>
+<tr>
+<td>Ensemble members</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Fold models (total)</td>
+<td>65 (5 per member)</td>
+</tr>
+<tr>
+<td>Platt slope <em>a</em> / intercept <em>b</em></td>
+<td>4.6564 / 1.2699</td>
+</tr>
+<tr>
+<td>Runtime E2E Pearson <em>r</em> (vs OOF)</td>
+<td>0.981</td>
+</tr>
+<tr>
+<td>Runtime E2E probs std ratio</td>
+<td>1.016</td>
+</tr>
+</tbody>
+</table>
+<p>| Hardware budget | 4 GB VRAM GPU, 24 cores, 5-fold CV |<br />
+| Runtime container | 1×A100 80 GB, Python 3.12, 3 h limit |<br />
+| Repo weight | 65 fold models (~3.9 GB, not shipped) |</p>
+<h3 id="figures">Figures</h3>
+<p><img alt="OOF ROC curves: best members and the final 12/13-member blends" src="assets/dat-parkinsons/roc_oof.png" /><br />
+<em>Figure 1 — OOF ROC curves. The final 13-member blend reaches AUC 0.9684; two of the strongest single members (ResNet50+EMA, DenseNet121) are shown for comparison.</em></p>
+<p><img alt="Per-member OOF AUC bar chart" src="assets/dat-parkinsons/member_auc.png" /><br />
+<em>Figure 2 — Per-member OOF AUC. The green bar is the diversity member (#13, EfficientNet-B0) whose individual AUC is lowest yet improves the blend (decorrelation beats strength).</em></p>
+<p><img alt="Calibration curve of the final blend" src="assets/dat-parkinsons/calibration_curve.png" /><br />
+<em>Figure 3 — Calibration curve. Points follow the diagonal (good calibration); point size encodes bin count. This is what makes the 0.2472 private log loss possible.</em></p>
+<h3 id="21-what-is-calibrated-here-and-why-it-matters">2.1 What is calibrated here, and why it matters</h3>
+<p>The <strong>single most important</strong> result of this project is that log-loss<br />
+optimisation is a <em>calibration</em> problem, not an <em>accuracy</em> problem. Every<br />
+submission is scored as<br />
+<code>LL = −1/N Σ [y·log(p) + (1−y)·log(1−p)]</code>,<br />
+which penalises confident-but-wrong predictions <strong>and</strong> rewards probabilities<br />
+that match the true long-run base rate. A model with AUROC 0.97 can score<br />
+worse than a model with AUROC 0.90 if its probabilities are poorly calibrated.<br />
+This is why the solution is structured around <strong>honest out-of-fold statistics,<br />
+per-member z-score normalisation, and a single global Platt recalibration</strong> (see<br />
+sections 5 and 6).</p>
+<hr />
+<h2 id="3-preprocessing-anatomy-aligned-dat-scans">3. Preprocessing — anatomy-aligned DaT scans</h2>
+<p>The single most impactful preprocessing insight: the original pipeline<br />
+center-cropped the <strong>field of view</strong>, but FOV varies <strong>135–630 mm</strong> across<br />
+scanners, so the brain (and the striatum within it) lands in inconsistent<br />
+locations. Instead, every scan is:</p>
+<ol>
+<li><strong>read from NIfTI</strong> (<code>src/preprocess.py</code>) — orientation-normalised, 16-bit<br />
+   intensity array + voxel spacing extracted from the NIfTI header;</li>
+<li><strong>intensity-normalised</strong> per volume: percentile clipping + min-max scaling to<br />
+   [0, 1] to reduce scanner-to-scanner intensity differences;</li>
+<li><strong>anatomy-aligned</strong> (<code>src/align.py</code>): centred on the <strong>brain centre of mass<br />
+   (COM)</strong> and cropped to a fixed <em>physical</em> cube — a cheap registration that<br />
+   lands the striatum in a consistent place regardless of scanner;</li>
+<li><strong>projected / resampled</strong> to one of:</li>
+<li><strong>MIP</strong> (maximum-intensity projection) of the aligned brain at <strong>native<br />
+     in-plane resolution</strong>, target <strong>224×224</strong> (<code>MIP_TARGET</code>), fixed 200 mm<br />
+     physical cube (<code>BRAIN_CUBE_MM = 200.0</code>);</li>
+<li><strong>tight striatum MIP</strong> crop at <strong>120 mm</strong> or <strong>160 mm</strong> physical cube<br />
+     (<code>VARIANT_CUBE = {"str160": (160, "striatum"), "str120": (120, "striatum"),
+     "brain160": (160, "brain")}</code>) — these capture the dopamine-transporter<br />
+     signal in the striatum, directly where abnormal uptake shows;</li>
+<li><strong>3D volume</strong> resampled to a fixed isotropic grid (<code>GRID_MM = 3.0</code> → ~64³)<br />
+     for the 3D CNN;</li>
+<li><strong>AIP stacking</strong> — average-intensity projection concatenated channel-wise<br />
+     with the MIP (<code>stack="aip"</code>, 6-channel input).</li>
+</ol>
+<p><strong>Why it works.</strong> The striatum is small and sits centrally; a scanner-agnostic,<br />
+brain-COM-aligned crop turns a wildly variable multicentre problem into a<br />
+pseudo-registered one. Scanning-plane variation is absorbed by the crop, and the<br />
+intensity normalisation handles raw-count differences between centres.</p>
+<p><strong>Equivalence guarantee.</strong> <code>normalize → resize</code> and <code>resize → normalize</code> commute<br />
+for a per-channel constant affine + bilinear resize. We verified this formally<br />
+and empirically, so the <em>training</em> pipeline and the <em>runtime</em> <code>main.py</code> produce<br />
+bit-comparable inputs — a silent preprocessing drift (a classic source of<br />
+compile-time-good / runtime-bad submissions) is structurally excluded.</p>
+<hr />
+<h2 id="4-models-training">4. Models &amp; training</h2>
+<h3 id="backbones-srcmodelpy">Backbones (<code>src/model.py</code>)</h3>
+<ul>
+<li><strong>2D families</strong> on MIP/AIP input:</li>
+<li>ResNet-18 / <strong>ResNet-50</strong> (ImageNet backbone, <code>in_channels=3</code>, or 6 when<br />
+    stacking MIP+AIP);</li>
+<li><strong>DenseNet-121</strong>;</li>
+<li><strong>EfficientNet-B0</strong> (added late as a diversity-expanding backbone).</li>
+<li><strong>3D family</strong>: custom small <strong>3D ResNet</strong> (<code>DATScan3DCNN</code>, 32→64→128 base<br />
+  channels, ~dropout 0.3) on the aligned 3D volume grid.</li>
+</ul>
+<h3 id="training-srctrain_resnetpy-traintrain_allsh">Training (<code>src/train_resnet.py</code>, <code>train/train_all*.sh</code>)</h3>
+<ul>
+<li><strong>5-fold stratified CV</strong> per member; honest <strong>single-fold OOF</strong> scores per<br />
+  sample (each sample scored only by the fold that never saw it). This is the<br />
+  distribution used for all calibration.</li>
+<li>Defaults: <strong>60 epochs</strong>, Adam <code>lr=1e-3</code>, weight decay <code>1e-4</code>, BCE loss,<br />
+<strong>random rotation up to 15–25°</strong> augmentation, batch sizes chosen per backbone<br />
+  (8–32) with <strong>gradient accumulation</strong> for the bigger models on a low-VRAM<br />
+  (4 GB) GPU.</li>
+<li><strong>Variants</strong> used per member: <strong>EMA</strong> (exponential moving average of weights,<br />
+  decay 0.99), different <strong>seeds</strong> (42 / 123 / 999 / 1234), different <strong>crop<br />
+  variants</strong> (brain 200 / striatum 120 / striatum 160), <strong>MIP vs AIP</strong> stacks,<br />
+<strong>TTA on/off</strong>.</li>
+<li>Hardware: consumer RTX-class GPU, 4 GB VRAM, CPU-parallel preprocessing +<br />
+  mixed-precision (AMP) training.</li>
+</ul>
+<hr />
+<h2 id="5-ensemble-z-score-blend-platt-calibration-srcensemblepy">5. Ensemble — z-score blend + Platt calibration (<code>src/ensemble.py</code>)</h2>
+<p><img alt="Ensemble architecture scheme" src="assets/dat-parkinsons/architecture_scheme.png" /><br />
+<em>Figure 4 — End-to-end architecture: anatomy-aligned DaT scan → 13 members (MIP/AIP/3D inputs, ResNet/DenseNet/EfficientNet) → flip-TTA + 5-fold averaging → z-score blend → Platt to P(abnormal).</em></p>
+<p>Because the metric is log loss, the ensemble is designed to produce <strong>proper<br />
+probabilities</strong>, not just good AUC:</p>
+<ol>
+<li><strong>Per member:</strong> run inference with <strong>flip-TTA</strong> — spatial flips along<br />
+<code>dims=[3]</code> and <code>dims=[2]</code> of a <code>(B, 3, H, W)</code> tensor (the <em>only</em> correct<br />
+   spatial flips for a channel-last tensor; see §6), averaged with the<br />
+   non-flipped logit.</li>
+<li><strong>Fold-average:</strong> each member aggregates its 5 fold models' logits into one<br />
+<code>member_logit</code> per scan.</li>
+<li><strong>Z-score normalise</strong> each member with its <strong>honest single-fold OOF<br />
+   mean/std</strong>, computed on the <em>exact runtime arithmetic</em>:<br />
+<code>z_m = (x_m − μ_m) / σ_m</code>. This puts all 13 members on a common scale.</li>
+<li><strong>Blend:</strong> average the per-member z-scores → <code>blend_z</code>.</li>
+<li><strong>Platt:</strong> <code>P(abnormal) = σ(a · blend_z + b)</code>, with <code>a</code>, <code>b</code> fit by<br />
+   logistic regression on the OOF <code>blend_z</code> vs the labels (<code>a = 4.6564</code>,<br />
+<code>b = 1.2699</code>).</li>
+</ol>
+<p>Optional greedy <strong>forward selection</strong> on rank-AUC is available in<br />
+<code>src/ensemble.py</code> and was used during development to prune candidate members;<br />
+the final 13 were kept because each one added log-loss value through<br />
+decorrelation.</p>
+<h3 id="final-blend-members-calib_v10json">Final blend members (calib_v10.json)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Member</th>
+<th>Backbone</th>
+<th>Input</th>
+<th>TTA</th>
+<th>OOF LL</th>
+<th>OOF AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>weights_r50_s7</td>
+<td>ResNet50</td>
+<td>Brain 200 MIP</td>
+<td>yes</td>
+<td>0.2589</td>
+<td>0.9570</td>
+</tr>
+<tr>
+<td>2</td>
+<td>weights_dense_s999</td>
+<td>DenseNet121</td>
+<td>Brain 200 MIP</td>
+<td>yes</td>
+<td>0.2528</td>
+<td>0.9590</td>
+</tr>
+<tr>
+<td>3</td>
+<td>weights_str120_dense</td>
+<td>DenseNet121</td>
+<td>Striatum 120 MIP</td>
+<td>yes</td>
+<td>0.2827</td>
+<td>0.9503</td>
+</tr>
+<tr>
+<td>4</td>
+<td>weights_r50_s123</td>
+<td>ResNet50</td>
+<td>Brain 200 MIP</td>
+<td>yes</td>
+<td>0.2616</td>
+<td>0.9559</td>
+</tr>
+<tr>
+<td>5</td>
+<td>weights_r50_str160_128</td>
+<td>ResNet50</td>
+<td>Striatum 160 MIP</td>
+<td>yes</td>
+<td>0.2795</td>
+<td>0.9531</td>
+</tr>
+<tr>
+<td>6</td>
+<td>weights_r50_mipaip</td>
+<td>ResNet50</td>
+<td>Brain 200 MIP + AIP (6-ch)</td>
+<td>yes</td>
+<td>0.2845</td>
+<td>0.9484</td>
+</tr>
+<tr>
+<td>7</td>
+<td>weights_r50_ema</td>
+<td>ResNet50</td>
+<td>Brain 200 MIP</td>
+<td>yes</td>
+<td>0.2578</td>
+<td>0.9576</td>
+</tr>
+<tr>
+<td>8</td>
+<td>weights_dense_ema</td>
+<td>DenseNet121</td>
+<td>Brain 200 MIP</td>
+<td>yes</td>
+<td>0.2718</td>
+<td>0.9537</td>
+</tr>
+<tr>
+<td>9</td>
+<td>weights_str120_r50</td>
+<td>ResNet50</td>
+<td>Striatum 120 MIP</td>
+<td>yes</td>
+<td>0.2880</td>
+<td>0.9481</td>
+</tr>
+<tr>
+<td>10</td>
+<td>weights_r50_s999</td>
+<td>ResNet50</td>
+<td>Brain 200 MIP</td>
+<td><strong>no</strong></td>
+<td>0.2916</td>
+<td>0.9460</td>
+</tr>
+<tr>
+<td>11</td>
+<td>weights_dense_str160_128</td>
+<td>DenseNet121</td>
+<td>Striatum 160 MIP</td>
+<td>yes</td>
+<td>0.2999</td>
+<td>0.9457</td>
+</tr>
+<tr>
+<td>12</td>
+<td>weights_r18_s999</td>
+<td>ResNet18</td>
+<td>Brain 200 MIP</td>
+<td>yes</td>
+<td>0.2729</td>
+<td>0.9532</td>
+</tr>
+<tr>
+<td>13</td>
+<td>weights_effb0_s1234</td>
+<td>EfficientNet-B0</td>
+<td>Brain 200 MIP</td>
+<td>yes</td>
+<td>0.3070</td>
+<td>0.9400</td>
+</tr>
+</tbody>
+</table>
+<p>Member #13's inclusion improved the <em>blend</em> OOF log loss 0.2269 → 0.2267<br />
+(−0.0002) through diversity, even though its single-model OOF is weaker —<br />
+the ensemble optimum is <em>not</em> the max-AUC-member list. Per-member z-stats<br />
+(μ, σ) used at runtime are embedded in <code>model/calib.json</code>.</p>
+<h3 id="per-member-runtime-calibration-stats">Per-member runtime calibration stats (μ, σ)</h3>
+<p>These are the honest single-fold OOF mean and std of each member's flip-TTA<br />
+logits — the exact numbers written into <code>model/calib.json</code> and applied at<br />
+inference for z-score normalisation.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Member</th>
+<th>μ (zmean)</th>
+<th>σ (zstd)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>weights_r50_s7</td>
+<td>1.786</td>
+<td>4.818</td>
+</tr>
+<tr>
+<td>2</td>
+<td>weights_dense_s999</td>
+<td>1.635</td>
+<td>6.090</td>
+</tr>
+<tr>
+<td>3</td>
+<td>weights_str120_dense</td>
+<td>−0.375</td>
+<td>4.884</td>
+</tr>
+<tr>
+<td>4</td>
+<td>weights_r50_s123</td>
+<td>0.919</td>
+<td>4.757</td>
+</tr>
+<tr>
+<td>5</td>
+<td>weights_r50_str160_128</td>
+<td>−0.340</td>
+<td>2.716</td>
+</tr>
+<tr>
+<td>6</td>
+<td>weights_r50_mipaip</td>
+<td>1.157</td>
+<td>3.931</td>
+</tr>
+<tr>
+<td>7</td>
+<td>weights_r50_ema</td>
+<td>0.934</td>
+<td>4.596</td>
+</tr>
+<tr>
+<td>8</td>
+<td>weights_dense_ema</td>
+<td>0.728</td>
+<td>5.381</td>
+</tr>
+<tr>
+<td>9</td>
+<td>weights_str120_r50</td>
+<td>0.279</td>
+<td>4.150</td>
+</tr>
+<tr>
+<td>10</td>
+<td>weights_r50_s999</td>
+<td>0.865</td>
+<td>4.451</td>
+</tr>
+<tr>
+<td>11</td>
+<td>weights_dense_str160_128</td>
+<td>−1.359</td>
+<td>3.775</td>
+</tr>
+<tr>
+<td>12</td>
+<td>weights_r18_s999</td>
+<td>0.633</td>
+<td>6.008</td>
+</tr>
+<tr>
+<td>13</td>
+<td>weights_effb0_s1234</td>
+<td>0.404</td>
+<td>4.999</td>
+</tr>
+</tbody>
+</table>
+<p>Note how σ varies 2.7–6.1 across members — without z-normalisation these<br />
+differently-scaled logits could not be averaged meaningfully; the z-transforms<br />
+are what make the linear blend valid.</p>
+<hr />
+<h2 id="6-the-calibration-bug-that-cost-0095-log-loss-post-mortem">6. The calibration bug that cost ~0.095 log loss (post-mortem)</h2>
+<p>Early submissions (v6_fixed 0.3052, v7/v8 0.3427) did far worse than OOF<br />
+promised (0.2269). The test set was <strong>not</strong> harder — top leaderboard entries<br />
+were at ~0.215–0.226. A deterministic code bug was the cause:</p>
+<pre><code>runtime (main.py)  TTA flips dims = [3], [2]  → spatial W, H   → logit std ≈ 4.82
+OOF calibration    TTA flips dims = [2], [1]  → H + CHANNEL    → logit std ≈ 3.14
+</code></pre>
+<p>Z-scores were computed with the OOF σ (3.14) but at runtime the actual logits<br />
+had σ ≈ 4.82 — so runtime z-scores were ~1.53× larger than the Platt fit<br />
+expected, making predictions <strong>severely overconfident</strong> and inflating log loss.</p>
+<p><strong>Fix:</strong> recompute OOF (and thus every μ, σ and the Platt fit) using the <em>exact</em><br />
+runtime flip dims <code>[3],[2]</code>. This recovered ~0.095 of log loss, and is the<br />
+reason v10 scored 0.2472 rather than ~0.34.</p>
+<p><strong>Guaranteeing no recurrence</strong> — the verification gauntlet that caught it:<br />
+1. <strong>Runtime E2E run</strong> — execute the <em>packaged</em> <code>main.py</code> on scans and compare<br />
+   against OOF: <code>Pearson r = 0.981</code>, <code>Spearman ρ = 0.992</code>, probs std ratio<br />
+<code>1.016</code>. v7 would have shown r ≈ 0.5–0.7 and std ratio ≈ 1.5.<br />
+2. <strong>Calibration reconstruction</strong> — re-derive z-stats + Platt from OOF and check<br />
+   they reproduce the stored <code>calib.json</code> numbers exactly.<br />
+3. <strong>Member-config audit</strong> — every member's preproc/proj/stack/size/backbone in<br />
+<code>calib.json</code> matched its own training <code>calib.json</code>.<br />
+4. <strong>Preprocessing equivalence</strong> — training and runtime <code>align.py</code> differ only<br />
+   in loader/caching wrappers; core <code>aligned_mips</code> / <code>crop_physical</code> identical.</p>
+<hr />
+<h2 id="7-runtime-submission-submission_srcmainpy">7. Runtime &amp; submission (<code>submission_src/main.py</code>)</h2>
+<p>The submitted artifact is a zip run in the DrivenData container (Python 3.12,<br />
+1×A100 80 GB, 24 vCPU, 220 GB RAM, no network, 3 h limit). Each submission is<br />
+self-contained — the platform provides no model registry, so <strong>all 65 fold<br />
+weights + code + calibration travel inside the zip</strong>:</p>
+<pre><code>submission.zip
+├── main.py                      # entrypoint (required at zip root)
+├── src/{__init__,align,model,preprocess}.py
+└── model/{&lt;member&gt;_fold_&lt;k&gt;.pt, calib.json}   # 65 fold models + calibration
+</code></pre>
+<p><code>main.py</code> reads scans + <code>submission_format.csv</code> from <code>/code_execution/data</code>,<br />
+runs per-member inference (CPU-parallel preprocessing, GPU batched inference,<br />
+flip-TTA), applies the z-score blend + Platt, and writes <code>submission.csv</code> with<br />
+<code>uid,is_pathologic</code>. <code>make_submission.py</code> builds the zip deterministically;<br />
+<code>test_submission.py</code> and <code>smoke_test.py</code> validate locally (the smoke-test<br />
+container mirrors the real runtime on a small sample, no submission spent).</p>
+<hr />
+<h2 id="8-the-full-development-journey-all-experiments">8. The full development journey (all experiments)</h2>
+<p>Development ran in <strong>waves</strong>, each driven by a hypothesis and terminated by a<br />
+measurement — this is the actual log of what was tried, kept, or dropped.</p>
+<h3 id="phase-0-baseline-2026-08-12">Phase 0 — baseline (2026-08-12)</h3>
+<ul>
+<li><strong>Small 3D ResNet @ 64³, 30 epochs, 5-fold.</strong> CV log loss <strong>0.646</strong>, AUC<br />
+<strong>0.669</strong>; OOF calibrated log loss 0.643; 20-scan smoke test 0.547/0.824.</li>
+<li><em>Baseline reference</em>: predicting the base rate (0.55) gives LL ≈ 0.685. The<br />
+  first real model added ~0.04 LL vs a constant prediction — a very weak<br />
+  starting point that motivated the anatomy-aligned rewrite.</li>
+</ul>
+<h3 id="phase-1-anatomy-aligned-mip-rewrite">Phase 1 — anatomy-aligned MIP rewrite</h3>
+<ul>
+<li>Switched from FOV-crop 3D to <strong>brain-COM-aligned 2D MIP CNNs</strong>. This is where<br />
+  the project jumped from ~0.64 LL / 0.67 AUC to ~0.95 AUC — the alignment<br />
+  insight was worth more than any model change.</li>
+<li>Registered alignments tested and <strong>rejected</strong> after measurement: striatum<br />
+  roll refinement, template FFT, SimpleITK rigid registration — all worse than<br />
+  plain COM alignment (<code>src/proto_align*.py</code>, <code>src/proto_sitk.py</code>). Simple is<br />
+  better when the preprocessing must generalise across 10 scanners.</li>
+</ul>
+<h3 id="phase-2-wave-1-backbones-rot15-60-ep-seed-42">Phase 2 — Wave 1 backbones (rot=15°, 60 ep, seed 42)</h3>
+<table>
+<thead>
+<tr>
+<th>weights dir</th>
+<th>backbone</th>
+<th>CV AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>weights_resnet50</td>
+<td>resnet50</td>
+<td><strong>0.9530</strong></td>
+</tr>
+<tr>
+<td>weights_densenet</td>
+<td>densenet121</td>
+<td>0.9526</td>
+</tr>
+<tr>
+<td>weights_resnet18_rot</td>
+<td>resnet18 + EMA</td>
+<td>0.9465</td>
+</tr>
+<tr>
+<td>weights_resnet18_s123</td>
+<td>resnet18 s123</td>
+<td>0.9461</td>
+</tr>
+<tr>
+<td>weights_resnet34</td>
+<td>resnet34</td>
+<td>0.9453</td>
+</tr>
+<tr>
+<td>weights_effb0</td>
+<td>efficientnet_b0</td>
+<td>0.9412</td>
+</tr>
+</tbody>
+</table>
+<p>Older single models: resnet 0.9393, resnet224 0.9393, resnet_s7 0.9446.</p>
+<h3 id="phase-3-tight-crop-striatum-study">Phase 3 — tight-crop striatum study</h3>
+<p>Fold-0 no-aug controlled experiments (same split):<br />
+| variant | AUC |<br />
+|---|---|<br />
+| brain200 (baseline) | 0.9020 |<br />
+| str160 | 0.9147 |<br />
+| <strong>str120</strong> | <strong>0.9228</strong> (+0.021) |</p>
+<p>str120 tight crop was the fold-0 winner, but the full 5-fold production pilot<br />
+(str120_pilot, rot15/60ep) got <strong>0.9450</strong> vs brain200 resnet18 s42 EMA<br />
+<strong>0.9465</strong> — the gain did <strong>not</strong> reproduce under strong augmentation.<br />
+Decision: keep brain200 as default; use <strong>str120 only for ensemble diversity</strong><br />
+(str120_pilot became the second greedy pick).</p>
+<h3 id="phase-4-wave-3-ema-and-seeds">Phase 4 — Wave 3 (EMA and seeds)</h3>
+<table>
+<thead>
+<tr>
+<th>weights dir</th>
+<th>config</th>
+<th>CV AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>weights_r50_ema</td>
+<td>resnet50 s42 + EMA</td>
+<td><strong>0.9547</strong></td>
+</tr>
+<tr>
+<td>weights_dense_ema</td>
+<td>densenet121 s42 + EMA</td>
+<td><strong>0.9549</strong></td>
+</tr>
+<tr>
+<td>weights_r18_s999</td>
+<td>resnet18 s999 rot25</td>
+<td>0.9509</td>
+</tr>
+<tr>
+<td>weights_r18_224</td>
+<td>resnet18 @224</td>
+<td>0.9496</td>
+</tr>
+<tr>
+<td>weights_effb1</td>
+<td>efficientnet_b1</td>
+<td>0.9384</td>
+</tr>
+<tr>
+<td>weights_str120_r50</td>
+<td>resnet50 str120</td>
+<td>0.9386</td>
+</tr>
+<tr>
+<td>weights_r50_224</td>
+<td>resnet50 @224</td>
+<td>0.9000</td>
+</tr>
+</tbody>
+</table>
+<p>Takeaways: <strong>EMA reliably helps</strong> (r50 0.9530→0.9547, dense 0.9526→0.9549);<br />
+resnet18@224 helps (0.9496 vs 0.9461); effb1 is worse than effb0; str120 hurts<br />
+resnet50 (0.9386); r50@224 badly overfits (0.9000).</p>
+<h3 id="phase-5-rich-label-experiments-wave-4">Phase 5 — rich-label experiments (Wave 4)</h3>
+<table>
+<thead>
+<tr>
+<th>weights dir</th>
+<th>config</th>
+<th>CV AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>weights_dense_mix</td>
+<td>densenet121 + mixup 0.2</td>
+<td>0.9528</td>
+</tr>
+<tr>
+<td>weights_r50_mix</td>
+<td>resnet50 + mixup 0.2</td>
+<td>0.9483</td>
+</tr>
+<tr>
+<td>(r50_smooth</td>
+<td>label smoothing</td>
+<td>not better)</td>
+</tr>
+<tr>
+<td>(vol3d</td>
+<td>3D ResNet</td>
+<td>kept for diversity)</td>
+</tr>
+</tbody>
+</table>
+<p>Mixup helped densenet but hurt resnet50 → not used in final blend (except the<br />
+3D member). Other tested-and-rejected: label smoothing, OLS+SAM regularisation,<br />
+EfficientNet-B1, large image sizes at 224.</p>
+<h3 id="phase-6-ensemble-assembly-the-key-lesson">Phase 6 — ensemble assembly (the key lesson)</h3>
+<ul>
+<li>First z-blend of 3 members gave 0.9487 / LL 0.285.</li>
+<li>Greedy forward selection on OOF log loss expanded the blend to 12 → 13.</li>
+<li><strong>weights_effb0_s1234 (EfficientNet-B0)</strong> was the final diversity pick: single<br />
+  OOF LL 0.3070, yet improved the blend 0.2269 → 0.2267.</li>
+<li>v9 (12 members) and v10 (13 members) are the two verified, packaged<br />
+  submissions; v10 was the final.</li>
+</ul>
+<h3 id="phase-7-the-calibration-fix-v7-v10">Phase 7 — the calibration fix (v7 → v10)</h3>
+<ul>
+<li>v6_fixed scored 0.3052, v7/v8 0.3427 — the OOF/runtime flip-dim mismatch (§6).</li>
+<li>Diagnostic: E2E runtime-vs-OOF scale check. Found Pearson ≈0.5 and std ratio<br />
+  ≈1.5 expected for the buggy path, vs r=0.981 and ratio 1.016 after the fix.</li>
+<li>v9/v10 recompute OOF with the exact runtime flips, producing z-stats that<br />
+  match runtime logit distribution. Final private test: <strong>0.2472</strong>.</li>
+</ul>
+<p><img alt="Submission progression on the platform" src="assets/dat-parkinsons/submission_progression.png" /><br />
+<em>Figure 5 — As-scored private test log loss. The calibration fix (§6) recovered ~0.095 log loss between v7/v8 (0.3427) and v10 (0.2472).</em></p>
+<hr />
+<h2 id="9-expertise-demonstrated">9. Expertise demonstrated</h2>
+<ul>
+<li><strong>Medical-imaging ML</strong>: 3D NIfTI handling, cross-scanner generalisation with<br />
+  a scanner-agnostic anatomical alignment, MIP/AIP projections, SPECT-specific<br />
+  anatomy (striatum-targeted crops).</li>
+<li><strong>Competition engineering</strong>: 5-fold honest OOF, code-execution runtime<br />
+  packaging, local E2E container-equivalent testing, deterministic zip builds,<br />
+  smoke-test discipline (no wasted submissions), deadline risk management<br />
+  (verified primary + fallback artefacts).</li>
+<li><strong>Probabilistic modelling</strong>: Platt calibration, per-member z-score<br />
+  standardisation, log-loss-optimal ensemble design, calibration-vs-single-model<br />
+  trade-off analysis.</li>
+<li><strong>Pragmatic experimentation</strong>: a documented hypothesis→measure→decide loop<br />
+  including ~20 trained variants, rejected-registration audit<br />
+  (COM &gt; FFT/template/SITK), and diversity-aware member selection.</li>
+<li><strong>Diagnostic rigour</strong>: the bug was found by testing the <em>packaged artifact</em><br />
+  against the OOF distribution, not by reading code — the data told the story<br />
+  (correlation and std-ratio breaks), then the code confirmed the dims.</li>
+</ul>
+<hr />
+<h2 id="10-reproduction">10. Reproduction</h2>
+<pre><code class="language-bash"># 1. Train members (5-fold, per-backbone batch sizes)
+./train/train_all.sh            # wave 1: base backbones
+./train/train_all2.sh           # wave 2: residual runs
+./train/train_all3.sh           # wave 3: EMA, striatum crops
+
+# 2. Compute honest OOF for every candidate (exact runtime flips dims=[3],[2])
+python tools/tools_v9_oof.py -o oof_runtime.npz --members weights_*_s7
+
+# 3. Select blend that minimises OOF log loss
+python tools/tools_v10_select2.py
+
+# 4. Fit z-stats + Platt, write calib.json
+python tools/tools_v10_calib.py
+
+# 5. Package submission.zip
+python make_submission.py
+
+# 6. Verify (the gauntlet of §6)
+python tools/final_gate.py          # weights load, arch match, calib sanity
+python test_submission.py           # E2E packaged run vs OOF scale
+python tools/verify_v9_calib.py     # calibration reconstruction
+</code></pre>
+<h2 id="11-lessons-learned">11. Lessons learned</h2>
+<ul>
+<li><strong>Never calibrate on a distribution the runtime can't produce.</strong> The v7/v8<br />
+  disaster was a one-line flip-axis typo in OOF-only code. Log loss lives or<br />
+  dies on calibration consistency, not on raw accuracy.</li>
+<li><strong>Verify the packaged artifact, not the training code.</strong> Only running the<br />
+  exact <code>main.py</code> from the zip on real data — and checking scale vs OOF<br />
+  (Pearson + std ratio) — could have caught the bug.</li>
+<li><strong>Optimise directly for the metric.</strong> Here that meant honest OOF, log-loss<br />
+  blend selection, and Platt calibration — all on the same single-fold<br />
+  distribution that test-time inference actually produces.</li>
+<li><strong>Diversity beats strength in ensembles for log loss.</strong> The weakest single<br />
+  member (EfficientNet-B0, OOF LL 0.3070) still improved the final blend<br />
+  (0.2267) via decorrelation.</li>
+<li><strong>Register cheaply, generalise widely.</strong> FOV-crop fails across scanners; a<br />
+  physical-cube COM alignment beats heavier image registration on 10-centre<br />
+  data measured end-to-end.</li>
+<li><strong>Budget your submissions.</strong> Code-execution platforms charge expensive<br />
+  submissions; a local E2E harness plus a free smoke test is the difference<br />
+  between "works locally" and "works in the container".</li>
+</ul>
+<h2 id="12-credit">12. Credit</h2>
+<p>Annotated imaging data and expert labels from 10 French hospital centres,<br />
+assembled by the French Society of Nuclear Medicine (SFMN) with the Health Data<br />
+Hub and GaelO, supported by the France 2030 plan. Competition hosted by<br />
+DrivenData. This repository contains the methodology, experiments log and<br />
+verified reproduction code.</p>
+<h2 id="license">License</h2>
+<p>MIT License. <strong>Competition data and 3.9 GB of trained weights are not<br />
+included</strong> (redistribution-restricted data; weights available on request).</p>
+        </article>
+    </main>
+
+    <footer class="bg-dark text-center text-light py-4 mt-5">
+        <p class="mb-0">&copy; 2026 Boi Kone &bull; Pharmacist &amp; Research Scientist &bull; Bamako, Mali</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
