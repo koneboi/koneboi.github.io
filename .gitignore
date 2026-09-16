@@ -6,6 +6,7 @@
 !*.js
 !*.xml
 !images/
+!images/**
 !docs/
 !README.md
 !info.md
