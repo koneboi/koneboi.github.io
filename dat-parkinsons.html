@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DaT Parkinson's Challenge — Boi Kone</title>
-    <meta name="description" content="Top-28 DaT Parkinson's Challenge solution (#28/361, log loss 0.2472): 13-member Bayesian ensemble, anatomy-aligned preprocessing, Platt-scaled z-score blend. Full technical details, experiments and figures.">
+    <meta name="description" content="Top-31 DaT Parkinson's Challenge solution (#31/361, final private test log loss 0.2946, AUROC 0.9432): 13-member Bayesian ensemble, anatomy-aligned preprocessing, Platt-scaled z-score blend. Full technical details, experiments and figures.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <style>
@@ -56,7 +56,7 @@
         <div class="container">
             <p class="text-uppercase text-info mb-2">Projects &middot; Machine Learning &middot; Medical Imaging</p>
             <h1 class="display-4 fw-bold">DaT Parkinson's Challenge</h1>
-            <p class="lead mt-2">Rank <strong>#28 of 361</strong> &bull; private test log loss <strong>0.2472</strong> &bull; 13-member Bayesian ensemble with Platt-scaled z-score blending.</p>
+            <p class="lead mt-2">Rank <strong>#31 of 361</strong> &bull; final private test log loss <strong>0.2946</strong> (AUROC <strong>0.9432</strong>) &bull; 13-member Bayesian ensemble with Platt-scaled z-score blending.</p>
             <p class="mt-2">
                 <a href="https://www.drivendata.org/competitions/311/dat-parkinsons-challenge/" target="_blank" class="badge bg-dark text-decoration-none">DrivenData</a>
                 <a href="https://github.com/koneboi/dat-parkinsons" target="_blank" class="badge bg-secondary text-decoration-none">Repository</a>
@@ -69,17 +69,17 @@
         <article class="project-content mx-auto">
 <h1 id="dat-parkinsons-challenge-bayesian-ensemble">DaT Parkinson's Challenge — Bayesian Ensemble</h1>
 <p><img alt="Competition" src="https://img.shields.io/badge/DrivenData-DaT%20Parkinson's%20Challenge-blue?style=flat-square" /><br />
-<img alt="Rank" src="https://img.shields.io/badge/Rank-%2328%2F361-6600cc?style=flat-square" /><br />
-<img alt="Log loss" src="https://img.shields.io/badge/Test%20log%20loss-0.2472-e11d48?style=flat-square" /><br />
+    <img alt="Rank" src="https://img.shields.io/badge/Rank-%2331%2F361-6600cc?style=flat-square" /><br />
+    <img alt="Log loss" src="https://img.shields.io/badge/Test%20log%20loss-0.2946-e11d48?style=flat-square" /><br />
 <img alt="License" src="https://img.shields.io/badge/License-MIT-success?style=flat-square" /></p>
-<p><strong>Top-28</strong> solution for the <strong>DaT Parkinson's Challenge</strong> — a DrivenData<br />
+            <p><strong>Top-31</strong> solution for the <strong>DaT Parkinson's Challenge</strong> — a DrivenData<br />
 competition hosted by the <strong>French Society of Nuclear Medicine (SFMN)</strong> with the<br />
 <strong>Health Data Hub</strong> and <strong>GaelO</strong>, part of the <em>Health Data Challenges</em> call for<br />
 projects funded by the <strong>France 2030</strong> plan.</p>
 <ul>
 <li><strong>Competition:</strong> https://www.drivendata.org/competitions/311/dat-parkinsons-challenge/</li>
-<li><strong>Best score (private test log loss):</strong> <strong>0.2472</strong></li>
-<li><strong>Current rank:</strong> <strong>#28 out of 361 participants</strong></li>
+            <li><strong>Final score (private test log loss):</strong> <strong>0.2946</strong></li>
+            <li><strong>Final rank:</strong> <strong>#31 out of 361 participants</strong></li>
 <li><strong>Metric:</strong> log loss (error — lower is better); AUROC shown for reference only</li>
 <li><strong>Page:</strong> https://koneboi.github.io/dat-parkinsons.html</li>
 <li><strong>Registry:</strong> www.drivendata.org/competitions/311/dat-parkinsons-challenge/</li>
@@ -126,12 +126,16 @@ deadline for reference and learning.</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>Private test log loss</strong></td>
-<td><strong>0.2472</strong></td>
-</tr>
-<tr>
-<td><strong>Final rank</strong></td>
-<td><strong>#28 / 361 participants</strong></td>
+            <td><strong>Private test log loss (final)</strong></td>
+            <td><strong>0.2946</strong></td>
+            </tr>
+            <tr>
+            <td><strong>Private test AUROC (final)</strong></td>
+            <td><strong>0.9432</strong></td>
+            </tr>
+            <tr>
+            <td><strong>Final rank</strong></td>
+            <td><strong>#31 / 361 participants</strong></td>
 </tr>
 <tr>
 <td>OOF log loss (honest single-fold)</td>
@@ -176,7 +180,7 @@ deadline for reference and learning.</p>
 <p><img alt="Per-member OOF AUC bar chart" src="images/dat-parkinsons/member_auc.png" /><br />
 <em>Figure 2 — Per-member OOF AUC. The green bar is the diversity member (#13, EfficientNet-B0) whose individual AUC is lowest yet improves the blend (decorrelation beats strength).</em></p>
 <p><img alt="Calibration curve of the final blend" src="images/dat-parkinsons/calibration_curve.png" /><br />
-<em>Figure 3 — Calibration curve. Points follow the diagonal (good calibration); point size encodes bin count. This is what makes the 0.2472 private log loss possible.</em></p>
+            <em>Figure 3 — Calibration curve. Points follow the diagonal (good calibration); point size encodes bin count. Calibration quality is exactly what log loss rewards; without it the final score would be far worse.</em></p>
 <h3 id="21-what-is-calibrated-here-and-why-it-matters">2.1 What is calibrated here, and why it matters</h3>
 <p>The <strong>single most important</strong> result of this project is that log-loss<br />
 optimisation is a <em>calibration</em> problem, not an <em>accuracy</em> problem. Every<br />
@@ -523,8 +527,10 @@ OOF calibration    TTA flips dims = [2], [1]  → H + CHANNEL    → logit std �
 had σ ≈ 4.82 — so runtime z-scores were ~1.53× larger than the Platt fit<br />
 expected, making predictions <strong>severely overconfident</strong> and inflating log loss.</p>
 <p><strong>Fix:</strong> recompute OOF (and thus every μ, σ and the Platt fit) using the <em>exact</em><br />
-runtime flip dims <code>[3],[2]</code>. This recovered ~0.095 of log loss, and is the<br />
-reason v10 scored 0.2472 rather than ~0.34.</p>
+runtime flip dims <code>[3],[2]</code>. This recovered ~0.095 of log loss at development<br />
+time, and is the reason the calibration-fixed v10 scored well (live 0.2472)<br />
+rather than ~0.34; the final private-leaderboard standing after rescoring is<br />
+0.2946.</p>
 <p><strong>Guaranteeing no recurrence</strong> — the verification gauntlet that caught it:<br />
 1. <strong>Runtime E2E run</strong> — execute the <em>packaged</em> <code>main.py</code> on scans and compare<br />
    against OOF: <code>Pearson r = 0.981</code>, <code>Spearman ρ = 0.992</code>, probs std ratio<br />
@@ -729,10 +735,11 @@ EfficientNet-B1, large image sizes at 224.</p>
 <li>Diagnostic: E2E runtime-vs-OOF scale check. Found Pearson ≈0.5 and std ratio<br />
   ≈1.5 expected for the buggy path, vs r=0.981 and ratio 1.016 after the fix.</li>
 <li>v9/v10 recompute OOF with the exact runtime flips, producing z-stats that<br />
-  match runtime logit distribution. Final private test: <strong>0.2472</strong>.</li>
+  match runtime logit distribution. Live private test: <strong>0.2472</strong> — the final
+  private-leaderboard standing after rescoring: <strong>0.2946</strong>.</li>
 </ul>
 <p><img alt="Submission progression on the platform" src="images/dat-parkinsons/submission_progression.png" /><br />
-<em>Figure 5 — As-scored private test log loss. The calibration fix (§6) recovered ~0.095 log loss between v7/v8 (0.3427) and v10 (0.2472).</em></p>
+<em>Figure 5 — As-scored private test log loss. The calibration fix (§6) recovered ~0.095 log loss between v7/v8 (0.3427) and v10 (0.2472 live).</em></p>
 <hr />
 <h2 id="9-expertise-demonstrated">9. Expertise demonstrated</h2>
 <ul>
