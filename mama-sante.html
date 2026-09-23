@@ -148,6 +148,17 @@ masks stripped — including the <code>*_mask_N.png</code> variants — leaving
 <li><strong>EDA:</strong> baseline logistic model established <strong>CV AUC 0.773</strong> as the number to beat/understand.</li>
 </ul>
 <p><img alt="BUSI dataset class distribution: benign 437, malignant 210, normal 133" src="images/mama-sante-data.png" /></p>
+<h3>Image &amp; data sources</h3>
+<div class="table-responsive">
+<table>
+<tr><th>Data / images</th><th>Used for</th><th>Kind</th><th>Attribution / license</th><th>Access</th></tr>
+<tr><td><strong>BUSI</strong> — breast-ultrasound images, 780 clean (benign 437 / malignant 210 / normal 133)</td><td>Imaging classification</td><td>Real medical images, public dataset</td><td>Al-Dhabyani, Gomaa, Khaled &amp; Fahmy — <em>Data in Brief</em> 28 (2020) 104863; collected at Baheya Hospital, Cairo; open for research</td><td>Hugging Face <code>gymprathap/Breast-Cancer-Ultrasound-Images-Dataset</code>; Kaggle copy</td></tr>
+<tr><td><strong>Synthetic patient cohort</strong> — 2,000 records, 7 risk features + outcomes</td><td>Risk model, triage, fairness audit</td><td>Generated (simulated — <em>not</em> real patients)</td><td>—</td><td><code>scripts/generate_synthetic_data.py</code></td></tr>
+<tr><td><strong>Malian referral centres</strong> — 12 facilities (level, equipment, cost, load)</td><td>Routing targets</td><td>Curated facility table</td><td>Compiled from public health-infrastructure sources</td><td><code>data/geo/centers.csv</code></td></tr>
+<tr><td><strong>OpenStreetMap Bamako</strong> — road network (30,232 nodes / 88,257 edges)</td><td>Travel-time routing graph</td><td>Crowd-sourced geographic data</td><td>&#169; OpenStreetMap contributors — <a href="https://www.openstreetmap.org/copyright" target="_blank">ODbL 1.0</a></td><td>via OSMnx — <code>scripts/fetch_network.py</code></td></tr>
+</table>
+</div>
+<p><strong>Citation</strong> — W. Al-Dhabyani, M. Gomaa, H. Khaled, A. Fahmy. <em>"Dataset of breast ultrasound images."</em> <strong>Data in Brief</strong> 28 (2020) 104863. <code>doi:10.1016/j.dib.2019.104863</code> — mirror on Hugging Face: <code>gymprathap/Breast-Cancer-Ultrasound-Images-Dataset</code>.</p>
 <h3 id="step-3-risk">Step 3 — Risk stratification</h3>
 <p>GradientBoosting on the 7 configured features, seeded CV → <strong>CV AUC 0.733</strong>
 (<code>models/risk_gb.pkl</code>); feeds <code>/triage</code>.</p>
