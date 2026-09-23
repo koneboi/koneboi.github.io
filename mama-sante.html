@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mama-santé — Breast-Cancer Care Platform for Mali | Boi Kone</title>
+    <meta name="description" content="mama-santé: computational breast-cancer care platform for Mali — risk stratification (CV AUC 0.733), ultrasound classification (val 0.940, int8 TFLite 1.2 MB), 4-level triage and OSM-based referral routing attacking the distance, money and time barriers. Full build log, technical steps and key findings.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .project-content h1{font-size:2rem;font-weight:700;margin:1.5rem 0 .5rem}
+        .project-content h2{font-size:1.5rem;font-weight:700;margin:2rem 0 .75rem;padding-bottom:.35rem;border-bottom:2px solid #0d6efd20}
+        .project-content h3{font-size:1.15rem;font-weight:600;margin:1.25rem 0 .5rem}
+        .project-content p{margin:.5rem 0}
+        .project-content ul,.project-content ol{margin:.5rem 0 .5rem 1.2rem}
+        .project-content code{background:#f1f5f9;padding:.1rem .3rem;border-radius:4px;font-size:.85em}
+        .project-content pre{background:#0d1117;color:#c9d1d9;padding:1rem;border-radius:8px;overflow-x:auto;font-size:.82rem}
+        .project-content pre code{background:none;padding:0;color:inherit}
+        .project-content table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem}
+        .project-content th{background:#f1f5f9;border:1px solid #dee2e6;padding:.45rem .6rem;text-align:left}
+        .project-content td{border:1px solid #dee2e6;padding:.4rem .6rem}
+        .project-content tr:nth-child(even){background:#f8fafc}
+        .project-content img{max-width:100%;height:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.12);margin:.75rem 0}
+        .project-content blockquote{border-left:4px solid #0d6efd;background:#f1f5f9;padding:.6rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+        .project-content a{color:#0d6efd}
+        .project-content hr{border:0;border-top:1px solid #dee2e6;margin:2rem 0}
+        .project-content{max-width:900px}
+        .project-content h1:first-of-type{margin-top:.5rem}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Boi Kone</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="publications.html">Publications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="talks.html">Talks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="training.html">Training</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="projects.html">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="wet_labs.html">Wet Labs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <p class="text-uppercase text-info mb-2">Projects &middot; Machine Learning &middot; Health Systems</p>
+            <h1 class="display-4 fw-bold">mama-sant&eacute;</h1>
+            <p class="lead mt-2">Breast-cancer care platform for Mali &bull; risk stratification <strong>CV AUC 0.733</strong> &bull; ultrasound classifier <strong>val 0.940</strong> (ONNX) / <strong>int8 TFLite 1.2&nbsp;MB @ 0.803</strong> &bull; 4-level triage &bull; OSM routing over <strong>88k road edges</strong>.</p>
+            <p class="mt-2">
+                <a href="https://github.com/koneboi/mama-sante" target="_blank" class="badge bg-dark text-decoration-none">Repository</a>
+                <a href="https://github.com/koneboi/mama-sante#4-quickstart" target="_blank" class="badge bg-secondary text-decoration-none">Quickstart</a>
+                <a href="projects.html" class="badge bg-white text-dark text-decoration-none">&larr; Projects</a>
+            </p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="project-content mx-auto">
+<h1 id="mama-sante">mama-sant&eacute; — Computational Breast-Cancer Care for Mali</h1>
+<p><img alt="Risk" src="https://img.shields.io/badge/Risk%20stratification-GB%20CV%20AUC%200.733-e11d48?style=flat-square" />
+<img alt="Imaging" src="https://img.shields.io/badge/Imaging-MobileNetV3%20val%200.940-0d6efd?style=flat-square" />
+<img alt="Int8" src="https://img.shields.io/badge/On--device-int8%20TFLite%201.2%20MB%20%C2%B7%200.803-16a34a?style=flat-square" />
+<img alt="Routing" src="https://img.shields.io/badge/Routing-OSM%20Bamako%2088k%20edges-7c3aed?style=flat-square" />
+<img alt="License" src="https://img.shields.io/badge/License-MIT-success?style=flat-square" /></p>
+<p><strong>mama-sant&eacute;</strong> is a computational breast-cancer care platform built for the
+three barriers named in the original problem note — <strong>distance, money, and time</strong>.
+It couples four modules behind one Flask API and a mobile-first web UI that a health
+worker can run from a phone:</p>
+<ol>
+<li><strong>Risk stratification</strong> — GradientBoosting over 7 clinical/demographic features → risk score.</li>
+<li><strong>Ultrasound image classification</strong> — MobileNetV3-Small → benign / malignant / normal (BUSI), served through ONNX Runtime, exportable to a 1.2&nbsp;MB full-int8 TFLite model for phones.</li>
+<li><strong>Referral triage</strong> — deterministic 4-level decision: <code>wait → local_scan → regional_imaging → urgent_biopsy</code>.</li>
+<li><strong>Geographic routing</strong> — real OpenStreetMap road network of Bamako, picking the <em>nearest <strong>capable</strong></em> centre under a time-dominant cost with an explicit out-of-pocket FCFA term.</li>
+</ol>
+<ul>
+<li><strong>Repository:</strong> <a href="https://github.com/koneboi/mama-sante" target="_blank">github.com/koneboi/mama-sante</a></li>
+<li><strong>Stack:</strong> Python 3.10, torch 2.8 / torchvision 0.23, tensorflow-cpu 2.19, scikit-learn, ONNX Runtime 1.23, OSMnx 2.0, Flask 3, networkx</li>
+<li><strong>Data:</strong> BUSI ultrasound (780 clean images: 437 benign / 210 malignant / 133 normal) + 2,000-patient synthetic cohort + 12 Malian centres</li>
+<li><strong>License:</strong> MIT</li>
+</ul>
+<hr />
+<h2 id="1-the-problem">1. The problem</h2>
+<blockquote><p>the problem of breast cancer treatment in Mali are: <strong>distance, money, and time</strong>. How to fix these ?</p></blockquote>
+<p>Late presentation and long travel to scarce diagnostic centres mean patients arrive
+advanced, repeated trips bankrupt families, and referrals sit in queues while cancers
+progress. Each module attacks one barrier:</p>
+<table>
+<tr><th>Barrier</th><th>What the platform does</th></tr>
+<tr><td><strong>Distance</strong></td><td>Network-based routing to the nearest <em>capable</em> centre on real OSM roads (30,232 nodes / 88,257 edges of Bamako), with regional fallbacks</td></tr>
+<tr><td><strong>Money</strong></td><td>Out-of-pocket cost is an explicit routing objective (150 FCFA/km transport); capability filtering prevents wasted trips to centres that lack the required equipment</td></tr>
+<tr><td><strong>Time</strong></td><td>Risk + 4-level triage escalate urgent cases first; time is the dominant routing objective (weight <strong>40.0</strong> vs 0.2 for km)</td></tr>
+</table>
+<hr />
+<h2 id="2-results-at-a-glance">2. Results at a glance</h2>
+<table>
+<tr><th>Component</th><th>Metric</th><th>Value</th></tr>
+<tr><td>Baseline logistic (EDA)</td><td>CV AUC</td><td>0.773</td></tr>
+<tr><td>Risk stratification (GradientBoosting)</td><td>CV AUC</td><td><strong>0.733</strong></td></tr>
+<tr><td>Imaging torch MobileNetV3-Small (15% holdout, 663/117)</td><td>val accuracy</td><td><strong>0.940</strong></td></tr>
+<tr><td>ONNX fp32 parity vs torch</td><td>max abs diff</td><td>1.22e-06 (6.1 MB, 23–32 ms CPU)</td></tr>
+<tr><td>ONNX fp16</td><td>size</td><td>3.1 MB, parity-verified</td></tr>
+<tr><td>TFLite fp32 (Keras retrain)</td><td>val accuracy</td><td>0.872 (3.7 MB)</td></tr>
+<tr><td>TFLite <strong>full-int8</strong> (the phone artifact)</td><td>val accuracy</td><td><strong>0.803 @ 1.21 MB</strong> (int8 in/out, scale 1/127.5, zp −1)</td></tr>
+<tr><td>ORT post-training int8 (all recipes)</td><td>val accuracy</td><td>0.34–0.52 → <strong>rejected, root-caused (§6 F1)</strong></td></tr>
+<tr><td>Torch eager QAT</td><td>val accuracy</td><td>0.915 (export blocked — §6 F3)</td></tr>
+<tr><td>Fairness audit (overall)</td><td>AUC / ECE</td><td>0.896 / 0.024</td></tr>
+<tr><td>Fairness audit (subgroups)</td><td>TPR gaps</td><td><strong>region 0.60, wealth 0.18</strong> — pre-deployment blockers (§6 F6)</td></tr>
+</table>
+<p>Live HTTP smoke test of the API: benign scan → <code>benign 0.987</code>, malignant scan →
+<code>malignant 0.997</code>; high-risk patient with image flag → <code>urgent_biopsy → Bamako</code>
+regional hospital; a <code>local_scan</code> case resolves to the centre 2.8 km away; <code>wait</code>
+cases in the north fall through to Segou/Timbuktu — the capability filter and
+time-first cost behave as designed rather than always picking the geographic nearest
+facility.</p>
+<hr />
+<h2 id="3-full-build-log">3. Full build log — every step from the beginning</h2>
+<h3 id="step-0-problem-framing">Step 0 — Problem framing</h3>
+<p>Translated the three barriers in <code>note.md</code> into four computable problems:
+<em>who is high-risk</em> (risk), <em>what does the scan show</em> (imaging),
+<em>what level of care is needed</em> (triage), <em>where should the patient go</em> (routing).</p>
+<h3 id="step-1-scaffold">Step 1 — Scaffold &amp; configuration</h3>
+<p>Project skeleton with every tunable policy (feature list, thresholds, routing
+weights, imaging settings) centralised in <code>config.yaml</code> — the app never
+hard-codes policy. Environment: Python 3.10.18, CUDA, torch 2.8.0,
+tensorflow-cpu 2.19.0, sklearn 1.7.2, flask 3.0.3, osmnx 2.0.7, onnx/onnxruntime 1.23.</p>
+<h3 id="step-2-data">Step 2 — Data</h3>
+<ul>
+<li><strong>Synthetic cohort:</strong> 2,000 patient records with realistic correlations
+(age, rural flag, wealth quartile, symptom duration…) plus a 12-centre Malian facility
+table (post → district → regional → hospital levels, equipment inventory, load).</li>
+<li><strong>Real imaging data:</strong> BUSI taken from the HuggingFace mirror
+<code>gymprathap/Breast-Cancer-Ultrasound-Images-Dataset</code> (Kaggle download too slow);
+masks stripped — including the <code>*_mask_N.png</code> variants — leaving
+<strong>780 images: 437 benign / 210 malignant / 133 normal</strong>.</li>
+<li><strong>EDA:</strong> baseline logistic model established <strong>CV AUC 0.773</strong> as the number to beat/understand.</li>
+</ul>
+<h3 id="step-3-risk">Step 3 — Risk stratification</h3>
+<p>GradientBoosting on the 7 configured features, seeded CV → <strong>CV AUC 0.733</strong>
+(<code>models/risk_gb.pkl</code>); feeds <code>/triage</code>.</p>
+<h3 id="step-4-imaging">Step 4 — Imaging model</h3>
+<p>torchvision MobileNetV3-Small, ImageNet weights, 15% holdout (seed 0 → 663 train /
+117 val), ImageNet normalisation, flip/crop augmentation, weighted sampler against
+class imbalance → <strong>best val accuracy 0.940</strong> (<code>models/imaging.pt</code>).</p>
+<h3 id="step-5-onnx">Step 5 — ONNX export &amp; serving format</h3>
+<p>Traced export with softmax baked in, dynamic batch axis. fp32 <code>imaging.onnx</code>
+(6.1 MB, parity 1.22e-06, 23–32 ms CPU) and fp16 <code>imaging_fp16.onnx</code> (3.1 MB).
+<em>Gotcha found here → §6 F4.</em></p>
+<h3 id="step-6-quantization">Step 6 — Quantization for phones (three routes investigated)</h3>
+<ul>
+<li><strong>ORT PTQ int8</strong> — collapsed (0.34–0.52), root-caused to domain activation
+outliers → <strong>F1</strong>.</li>
+<li><strong>TFLite full-int8</strong> — after fixing the silent double-preprocessing bug
+<strong>F2a</strong>, reached <strong>0.803 @ 1.21 MB</strong> → the shipped phone artifact.</li>
+<li><strong>Torch eager QAT</strong> — trained to 0.915 but ONNX export of the converted
+graph is impossible at any supported opset → <strong>F3</strong>.</li>
+</ul>
+<h3 id="step-7-triage">Step 7 — Triage engine</h3>
+<p>Pure-function <code>decide()</code> over risk score, imaging result and confidence floor
+0.65 → one of four configured levels; escalation threshold 0.8.</p>
+<h3 id="step-8-routing">Step 8 — Geographic routing</h3>
+<ul>
+<li><code>fetch_network.py</code> pulled the real OSM extract of Bamako:
+<strong>30,232 nodes / 88,257 edges</strong>, per-edge <code>travel_time</code> via
+<code>add_travel_time</code> (31 MB graphml, git-ignored, one command to re-fetch).</li>
+<li><code>min_cost_center()</code>: cost = <code>0.2·km + 40·hours + 0.05·FCFA + 0.02·load</code>,
+candidates pruned to ≤ 1.5× the fastest travel time (time-fairness guard), then
+capability-filtered per triage level (e.g. <code>urgent_biopsy</code> needs biopsy/mammography
+capability).</li>
+<li><code>travel_metrics()</code>: network path → km, hours, FCFA; snap-guarded against &gt;2 km
+node mismatch, haversine ×1.3 fallback off-network. Transport: 150 FCFA/km.</li>
+</ul>
+<h3 id="step-9-api">Step 9 — API</h3>
+<p>Flask: <code>/</code>, <code>/health</code>, <code>/classify</code> (multipart upload → persisted → ONNX
+inference), <code>/triage</code> (JSON → risk + level + centre recommendation).
+Weights/thresholds read from <code>config.yaml</code>. <strong>Live HTTP smoke test</strong>:
+malignant image → <code>malignant 0.997</code>; benign → <code>benign 0.987</code>;
+high-risk + image flag → <code>urgent_biopsy → Bamako</code>.</p>
+<h3 id="step-10-ui">Step 10 — Mobile-first UI</h3>
+<p>Single-page form + image upload → <code>/classify</code> → <code>/triage</code>, rendering a risk
+gauge, triage badge, and a centre card (travel time, cost, OSM directions link).</p>
+<h3 id="step-11-fairness">Step 11 — Fairness audit</h3>
+<p><code>fairness.py</code> → <code>fairness_report.json</code>: overall AUC 0.896 / ECE 0.024 looks
+deployment-ready <em>until</em> subgroup slicing exposes <strong>region TPR disparity 0.60</strong>
+and <strong>wealth-quartile TPR disparity 0.18</strong> — the poorest quartile and some rural
+regions are systematically under-flagged by a pooled threshold. Flagged as
+pre-deployment blockers: per-region threshold calibration and re-weighting required.</p>
+<h3 id="step-12-publication">Step 12 — Publication</h3>
+<p>Open-sourced at <a href="https://github.com/koneboi/mama-sante" target="_blank">github.com/koneboi/mama-sante</a>
+(full README with reproduction commands) and added to this site’s Projects menu.</p>
+<hr />
+<h2 id="4-model-artifacts">4. Verified model artifacts</h2>
+<p>Weights are not committed (rebuild with the quickstart, or take them from a
+release); <code>models/imaging.json</code> is the manifest recording which artifact is
+verified, its accuracy and its intended use:</p>
+<table>
+<tr><th>Artifact</th><th>Format</th><th>Size</th><th>Accuracy</th><th>Use</th></tr>
+<tr><td><code>models/risk_gb.pkl</code></td><td>sklearn GB</td><td>140 KB</td><td>CV AUC 0.733</td><td>risk score</td></tr>
+<tr><td><code>models/imaging.onnx</code></td><td>ONNX fp32</td><td>6.1 MB</td><td>val 0.940</td><td>server <code>/classify</code> (default)</td></tr>
+<tr><td><code>models/imaging_fp16.onnx</code></td><td>ONNX fp16</td><td>3.1 MB</td><td>parity-verified</td><td>light GPU/NPU</td></tr>
+<tr><td><code>models/imaging_fp32.tflite</code></td><td>TFLite float</td><td>3.7 MB</td><td>val 0.872</td><td>mobile float reference</td></tr>
+<tr><td><code>models/imaging_int8.tflite</code></td><td>TFLite <strong>full-int8</strong></td><td><strong>1.21 MB</strong></td><td><strong>val 0.803</strong></td><td><strong>on-device phone</strong></td></tr>
+</table>
+<hr />
+<h2 id="5-api">5. API</h2>
+<table>
+<tr><th>Method</th><th>Route</th><th>Body</th><th>Returns</th></tr>
+<tr><td>GET</td><td><code>/</code></td><td>—</td><td>mobile UI</td></tr>
+<tr><td>GET</td><td><code>/health</code></td><td>—</td><td>service + model status</td></tr>
+<tr><td>POST</td><td><code>/classify</code></td><td><code>multipart: image</code></td><td><code>{class, confidence, probs, above_floor}</code></td></tr>
+<tr><td>POST</td><td><code>/triage</code></td><td>JSON patient fields + optional <code>image_result</code></td><td><code>{risk, triage, center:{name, travel_km, travel_h, out_of_pocket_fcfa, …}}</code></td></tr>
+</table>
+<pre><code>curl -F image=@scan.png localhost:5000/classify
+# {"class":"malignant","confidence":0.997,...}</code></pre>
+<hr />
+<h2 id="6-key-findings">6. Key findings (most important)</h2>
+<h3 id="f1">F1 — Post-training int8 quantization collapses on this domain (root-caused)</h3>
+<table>
+<tr><th>Recipe</th><th>val accuracy</th></tr>
+<tr><td>fp32 (reference)</td><td><strong>0.940</strong></td></tr>
+<tr><td>ORT dynamic int8</td><td>~0.34</td></tr>
+<tr><td>ORT static, MinMax</td><td>0.342</td></tr>
+<tr><td>ORT static, Percentile(99)</td><td>0.521</td></tr>
+<tr><td>ORT static, Entropy</td><td>0.350</td></tr>
+</table>
+<p><strong>Root cause:</strong> early-conv activations on OOD ultrasound carry extreme outliers
+— <strong>max ≈ 198 while p99 ≈ 6</strong> — so every range-based calibration scale is
+dominated by a handful of spikes and the bulk of the signal is crushed into a few
+int8 bins. A control MLP through the same ORT codepath stayed accurate, proving the
+ORT int8 kernels are fine; it is the <em>statistics of this domain</em>. PTQ is not
+viable here — use QAT (F3) or the TFLite path (F2).</p>
+<h3 id="f2">F2 — TFLite full-int8 works and is the shipped phone artifact</h3>
+<p>Keras retrain → <strong>fp32 0.872 (3.7 MB) → full-int8 0.803 (1.21 MB)</strong>, true int8
+in <em>and</em> out (scale 1/127.5, zp −1). Calibration set 96→300 changed nothing — the
+residual gap is activation-range mismatch, not coverage.</p>
+<ul>
+<li><strong>F2a — double preprocessing bug (silent 0.538 plateau):</strong> Keras
+<code>MobileNetV3Small</code> ships <code>include_preprocessing=True</code> (internal Rescaling
+1/127.5 offset −1). Scaling inputs to [−1,1] <em>as well</em> compressed everything into a
+~0.016-wide near-constant range: the model <em>memorised</em> train (0.92) but predicted
+<strong>all-benign at confidence 1.000</strong> on validation — reproducibly <strong>exactly 0.538</strong>
+(the benign share of the holdout) across runs with different external scalings, which
+is what exposed it. Fix: <code>include_preprocessing=False</code> + keep [−1,1].</li>
+<li><strong>F2b — environment quirks:</strong> int8 representative dataset must <code>yield
+[batch]</code> (lists — a 1-tuple crashes the calibrator); the XNNPACK int8 delegate fails
+to initialise → validate with <code>OpResolverType.BUILTIN_REF</code>; keras <code>.h5</code> reload is
+broken (use the <code>model.export()</code> SavedModel dir); the <code>MessageFactory…GetPrototype</code>
+line is a benign warning.</li>
+</ul>
+<h3 id="f3">F3 — Torch eager QAT learns accurate int8, but cannot export it to ONNX</h3>
+<p>QAT (per-tensor symmetric weights — per-channel raises
+<code>Unsupported qscheme: per_channel_affine</code>) trains to <strong>val 0.915</strong>: quantization
+<em>is</em> recoverable with learned ranges. Blocked because conversion must run on CPU
+(quantised cuDNN rejects depthwise <code>groups=16</code>), and <code>torch.onnx.export</code> cannot
+emit the converted graph at opsets 13/17/19 (<code>quantized::batch_norm2d</code> unsupported).
+Forcing BN-fold-into-conv before QAT destabilised training on this small dataset.
+Also: <code>freeze_bn_stats</code> no longer exists in torch 2.8 (ao quantization deprecated
+→ torchao/pt2e). <strong>Takeaway: for int8 on-device use TFLite (F2); QAT is the
+production recipe in a TF-based build.</strong></p>
+<h3 id="f4">F4 — Exporter/model-handle gotcha</h3>
+<p>In torch 2.8 <code>torch.onnx.export</code> <em>mutates the traced model in-memory</em> — parity
+tests must reload a fresh model first, otherwise you silently compare a model against
+itself.</p>
+<h3 id="f5">F5 — Routing policy behaves correctly on real geography</h3>
+<p>Capability filter + time-first cost + 1.5× fairness guard: <code>local_scan</code> → 2.8 km
+Bamako centre, <code>urgent_biopsy</code> → capable regional hospital, <code>wait</code> north →
+Segou/Timbuktu. Time dominance (40 vs 0.2 for km) is deliberate: for cancer pathways,
+hours matter more than distance.</p>
+<h3 id="f6">F6 — Fairness numbers that must not be shipped around</h3>
+<p>Pooled AUC 0.896 / ECE 0.024 hides a <strong>0.60 region TPR gap</strong> and <strong>0.18 wealth
+TPR gap</strong> — the poorest and some rural regions are systematically under-flagged by a
+pooled threshold. Pre-deployment blockers.</p>
+<h3 id="f7">F7 — Operational robustness</h3>
+<p>Background <code>nohup</code> trainings were silently killed mid-run several times — run long
+jobs in the foreground with a generous timeout. Broken/experimental model outputs were
+<em>deleted</em>, not left to be mistaken for verified artifacts; <code>models/imaging.json</code>
+is the single source of truth for what is verified.</p>
+<hr />
+<h2 id="7-reproduction">7. Reproduction</h2>
+<pre><code>pip install -r requirements.txt
+
+python scripts/generate_synthetic_data.py   # 2000 patients, 12 centres
+python scripts/train_risk.py                # -> models/risk_gb.pkl
+python scripts/train_imaging.py             # -> models/imaging.pt (val 0.940)
+python scripts/export_imaging.py            # -> fp32/fp16 ONNX + parity
+python scripts/train_tflite_imaging.py      # -> fp32 + full-int8 TFLite
+python scripts/fetch_network.py             # -> Bamako OSM graph
+python scripts/fairness.py                  # -> fairness_report.json
+python -m src.api.app                       # -> http://localhost:5000</code></pre>
+<h2 id="8-limitations">8. Limitations &amp; next steps</h2>
+<ul>
+<li>Patient cohort is <strong>synthetic</strong> (2,000 records); imaging is real (BUSI).
+Deployment needs a prospective Mali cohort — and re-running the F6 fairness audit on
+real subgroups first.</li>
+<li>int8 phone model is at 0.803 vs 0.940 fp32 — closing the gap needs QAT inside the
+TF/TFLite build (F3’s recipe).</li>
+<li>Fairness region/wealth gaps (F6) are release blockers as-is.</li>
+</ul>
+<h2 id="license">License</h2>
+<p>MIT. See the <a href="https://github.com/koneboi/mama-sante" target="_blank">repository</a>.</p>
+        </article>
+    </main>
+
+    <footer class="bg-dark text-center text-light py-4 mt-5">
+        <p class="mb-0">&copy; 2026 Boi Kone &bull; Pharmacist &amp; Research Scientist &bull; Bamako, Mali</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
