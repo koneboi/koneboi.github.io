@@ -118,7 +118,8 @@ wait in queues while their cancers progress. Each module attacks one barrier:</p
 <tr><td>ORT post-training int8 (all recipes)</td><td>val accuracy</td><td>0.34–0.52 → <strong>rejected, root-caused (§6 F1)</strong></td></tr>
 <tr><td>Torch eager QAT</td><td>val accuracy</td><td>0.915 (export blocked — §6 F3)</td></tr>
 <tr><td>Fairness audit (overall)</td><td>AUC / ECE</td><td>0.896 / 0.024</td></tr>
-<tr><td>Fairness audit (subgroups)</td><td>TPR gaps</td><td><strong>region 0.60, wealth 0.18</strong> — pre-deployment blockers (§6 F6)</td></tr>
+<tr><td>Fairness audit (subgroups, pooled rule)</td><td>TPR gaps</td><td><strong>region 0.60, wealth 0.18</strong></td></tr>
+<tr><td>After group-aware thresholds (Step 12)</td><td>TPR gaps</td><td><strong>region 0.278, wealth 0.039</strong> (rural residual 0.055, reported)</td></tr>
 </table>
 <p>Live HTTP smoke test of the API: benign scan → <code>benign 0.987</code>, malignant scan →
 <code>malignant 0.997</code>; high-risk patient with image flag → <code>urgent_biopsy → Bamako</code>
@@ -211,7 +212,61 @@ gauge, triage badge, and a centre card (travel time, cost, OSM directions link).
 deployment-ready <em>until</em> subgroup slicing exposes <strong>region TPR disparity 0.60</strong>
 and <strong>wealth-quartile TPR disparity 0.18</strong> — the poorest quartile and some rural
 regions are systematically under-flagged by a pooled threshold. Flagged as
-pre-deployment blockers: per-region threshold calibration and re-weighting required.</p>
+pre-deployment blockers; Step 12 implements the mitigation in code and ships it.</p>
+<h3 id="step-12-fairness-by-design">Step 12 — Fairness by design (group-aware decision thresholds)</h3>
+<p>Rather than retraining the model (which would invalidate every published metric), the
+shipped fix calibrates the <em>decision thresholds per group</em> so groups the pooled 0.5
+threshold systematically under-flags get an earlier, lower threshold. The calibrated
+table is committed and lives in <code>config/group_thresholds.json</code>:</p>
+<table>
+<tr><td>Region thresholds</td><td>Bamako 0.25 · Koulikoro 0.37 · Koutiala 0.33 · Mopti 0.5 · San 0.42 · Sikasso 0.57 · Segou 0.5 · Kayes 0.56 · Gao 0.73 · Kidal 0.65 · Timbuktu 0.5 · Nioro du Sahel 0.57</td></tr>
+<tr><td>Wealth-quartile thresholds</td><td>Q1 (poorest) 0.46 · Q2 0.48 · Q3 0.54 · Q4 0.65</td></tr>
+</table>
+<p>Combination rule for patients in two audited groups: <strong><code>min(region, wealth)</code></strong> —
+the most sensitive rule wins, so an under-flagged group is never delayed by the other
+group’s threshold. The choice is empirical, not stylistic:</p>
+<table>
+<tr><th>Rule</th><th>Region disparity</th><th>Wealth disparity</th></tr>
+<tr><td>pooled 0.5 (status quo)</td><td>0.600</td><td>0.183</td></tr>
+<tr><td><strong>min(region, wealth) ← shipped</strong></td><td><strong>0.278</strong></td><td><strong>0.039</strong></td></tr>
+<tr><td>mean(region, wealth)</td><td>0.476</td><td>0.121</td></tr>
+<tr><td>min 3-group (+rural)</td><td>0.378</td><td>0.076</td></tr>
+<tr><td>coordinate-descent</td><td>~0.300</td><td>~0.060</td></tr>
+</table>
+<p><code>rural_flag</code> is <strong>audited but not in the rule</strong>: adding it as a third dimension
+regressed both headline gaps, and coordinate descent could not beat min-2-group — the
+remaining rural TPR gap (0.055) is reported honestly and left as a deployment-time
+item. Under the shipped rule the overall metrics are <strong>TPR 0.303 / FPR 0.004 /
+selection 0.024</strong> vs pooled 0.250 / 0.0005 / 0.017: the system now actively finds ~1
+in 4 of the cohort’s cases instead of mostly flagging a few high-wealth urban patients.
+<code>src/risk/thresholds.py</code> resolves per-patient thresholds (fallback to pooled 0.5 for
+unknown groups / missing table); <code>src/api/app.py</code> passes it to the triage engine.</p>
+<h3 id="step-13-quality-explainability">Step 13 — Input quality gate &amp; explainability</h3>
+<p>Two robustness upgrades, no new training data:</p>
+<ul>
+<li><strong>OOD quality gate</strong> (<code>src/imaging/quality.py</code>, enforced by <code>/classify</code>): a
+cheap structural check (decode, min side ≥64 px, luminance variance, inter-channel
+colour spread, clipped-fraction) rejects garbage before ONNX inference — the class of
+inputs whose activation outliers broke int8 (F1). Real BUSI passes; blank, noise,
+colour-photo and tiny inputs return <code>suspicious: true</code> with no class.</li>
+<li><strong>Explainability:</strong> per-patient risk drivers via exact SHAP tree-shap
+(<code>src/risk/explain.py</code>, marginal-effect fallback) surfaced as <code>factors</code> from
+<code>/triage</code>; Grad-CAM (<code>src/imaging/gradcam.py</code>, <code>scripts/gradcam.py</code>) shows what
+the imaging model focuses on.</li>
+</ul>
+<p><img alt="SHAP factor contributions for a high-risk example patient" src="images/shap_factors.png" /></p>
+<p><em>A 62-year-old with 12 months of symptoms and positive family history: symptom
+duration (+1.44) and family history (+1.26) dominate the risk score.</em></p>
+<p><img alt="Grad-CAM overlay on a high-confidence malignant BUSI ultrasound" src="images/gradcam_malignant.png" /></p>
+<p><em>Grad-CAM overlay on a high-confidence malignant BUSI case — the model’s focus is
+localised to the lesion region, not the background.</em></p>
+<h3 id="step-14-tests">Step 14 — Test suite</h3>
+<p><code>tests/</code> — 48 tests, <code>pytest -q</code> green: triage decision rules, group-threshold
+resolution against the <em>shipped</em> <code>group_thresholds.json</code>, routing cost/travel,
+quality-gate verdicts on real BUSI + adversarial inputs, SHAP explainability matching
+the live model, Grad-CAM shapes/blending, and end-to-end Flask tests for
+<code>/classify</code> (incl. OOD rejection) and <code>/triage</code> (group thresholds, pooled fallback,
+factors).</p>
 <hr />
 <h2 id="4-model-artifacts">4. Verified model artifacts</h2>
 <p>Weights are not committed (rebuild with the quickstart, or take them from a
@@ -231,11 +286,27 @@ verified, its accuracy and its intended use:</p>
 <tr><th>Method</th><th>Route</th><th>Body</th><th>Returns</th></tr>
 <tr><td>GET</td><td><code>/</code></td><td>—</td><td>mobile UI</td></tr>
 <tr><td>GET</td><td><code>/health</code></td><td>—</td><td>service + model status</td></tr>
-<tr><td>POST</td><td><code>/classify</code></td><td><code>multipart: image</code></td><td><code>{class, confidence, probs, above_floor}</code></td></tr>
-<tr><td>POST</td><td><code>/triage</code></td><td>JSON patient fields + optional <code>image_result</code></td><td><code>{risk, triage, center:{name, travel_km, travel_h, out_of_pocket_fcfa, …}}</code></td></tr>
+<tr><td>POST</td><td><code>/classify</code></td><td><code>multipart: image</code></td><td><code>{class, confidence, probs, above_floor, suspicious, quality}</code></td></tr>
+<tr><td>POST</td><td><code>/triage</code></td><td>JSON patient fields + optional <code>image_result</code></td><td><code>{risk_score, risk_threshold, threshold_strategy, explain_method, factors, triage, center}</code></td></tr>
 </table>
+<p><code>/triage</code> resolves the risk threshold per patient (group rule from
+<code>config/group_thresholds.json</code>, pooled 0.5 fallback) and returns the top risk drivers;
+<code>/classify</code> returns <code>suspicious: true</code> + <code>quality.reasons</code> when the quality gate
+rejects the upload (no class, no confidence).</p>
 <pre><code>curl -F image=@scan.png localhost:5000/classify
-# {"class":"malignant","confidence":0.997,...}</code></pre>
+# {"class":"malignant","confidence":0.997,"above_floor":true,"suspicious":false,
+#  "quality":{"ok":true,"reasons":[],"checks":{...}},...}
+
+curl -s localhost:5000/triage -H 'Content-Type: application/json' -d '{
+  "age":62,"family_history":1,"palpability":1,"prior_biopsy":0,
+  "symptom_duration_months":12,"rural_flag":1,"wealth_quartile":1,
+  "region":"Koulikoro",
+  "image_result":{"confidence":0.95,"above_floor":true}
+}'
+# {"risk_score":0.718,"risk_threshold":0.37,"threshold_strategy":"group",
+#  "explain_method":"tree_shap",
+#  "factors":[{"feature":"symptom_duration_months","value":12,"baseline":2.8,"contribution":1.443},...],
+#  "triage":"urgent_biopsy","center":{...Koulikoro district...}}</code></pre>
 <hr />
 <h2 id="6-key-findings">6. Key findings (most important)</h2>
 <h3 id="f1">F1 — Post-training int8 quantization collapses on this domain (root-caused)</h3>
@@ -293,7 +364,10 @@ hours matter more than distance.</p>
 <h3 id="f6">F6 — Fairness numbers that must not be shipped around</h3>
 <p>Pooled AUC 0.896 / ECE 0.024 hides a <strong>0.60 region TPR gap</strong> and <strong>0.18 wealth
 TPR gap</strong> — the poorest and some rural regions are systematically under-flagged by a
-pooled threshold. Pre-deployment blockers.</p>
+pooled threshold. <strong>Mitigation shipped in Step 12</strong>: group decision thresholds (min
+rule) cut the region gap to <strong>0.278</strong> and the wealth gap to <strong>0.039</strong>; the residual
+rural gap (0.055) is reported rather than hidden. Re-run the audit on a real Mali
+cohort before deployment; never ship pooled-threshold-only numbers.</p>
 <p><img alt="Fairness audit: TPR by wealth quartile and by region on the synthetic cohort" src="images/mama-sante-fairness.png" /></p>
 <h3 id="f7">F7 — Operational robustness</h3>
 <p>Background <code>nohup</code> trainings were silently killed mid-run several times — run long
@@ -310,7 +384,10 @@ python scripts/train_imaging.py             # -> models/imaging.pt (val 0.940)
 python scripts/export_imaging.py            # -> fp32/fp16 ONNX + parity
 python scripts/train_tflite_imaging.py      # -> fp32 + full-int8 TFLite
 python scripts/fetch_network.py             # -> Bamako OSM graph
-python scripts/fairness.py                  # -> fairness_report.json
+python scripts/fairness.py                  # -> fairness_report.json + config/group_thresholds.json
+python scripts/explain_risk.py --age 62 --symptom-duration-months 12 --region Koulikoro   # optional
+python scripts/gradcam.py --image scan.png --out outputs/gradcam.png                       # optional
+python -m pytest -q                        # -> 48 tests
 python -m src.api.app                       # -> http://localhost:5000</code></pre>
 <h2 id="8-limitations">8. Limitations &amp; next steps</h2>
 <ul>
@@ -319,7 +396,10 @@ Deployment needs a prospective Mali cohort — and re-running the F6 fairness au
 real subgroups first.</li>
 <li>int8 phone model is at 0.803 vs 0.940 fp32 — closing the gap needs QAT inside the
 TF/TFLite build (F3’s recipe).</li>
-<li>Fairness region/wealth gaps (F6) are release blockers as-is.</li>
+<li>Rural TPR gap (0.055) remains after the group rule (Step 12); the threshold table
+is calibrated on synthetic data and must be re-fitted to a real Mali cohort.</li>
+<li>SHAP attributions are exact on the risk model but limited by its synthetic training
+distribution; Grad-CAM is a heat-map guide, not a clinical finding.</li>
 </ul>
 <h2 id="license">License</h2>
 <p>MIT. See the <a href="https://github.com/koneboi/mama-sante" target="_blank">repository</a>.</p>
