@@ -78,18 +78,22 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card border-0 shadow-sm h-100">
                     <a href="https://koneboi.github.io/mama-sante.html" target="_blank">
-                        <div class="card-img-top bg-dark text-center py-5">
-                            <span class="badge bg-success fs-5">mama-sant&eacute;</span>
-                        </div>
+                        <img class="card-img-top" src="images/mama-sante-results.png" alt="mama-sante imaging results: validation accuracy 0.940 torch/ONNX, 0.872 TFLite fp32, 0.803 full-int8 at 1.2 MB">
                     </a>
                     <div class="card-body d-flex flex-column">
                         <span class="badge bg-success mb-2">Machine Learning &bull; Health Systems &bull; Mali</span>
                         <h3 class="h5">mama-sant&eacute; — Breast-Cancer Care Platform</h3>
-                        <p class="small mb-2">End-to-end breast-cancer care platform attacking the distance, money and time barriers in Mali: risk stratification, ultrasound classification, 4-level referral triage and road-network routing to the nearest <em>capable</em> centre — behind a Flask API and mobile-first UI.</p>
-                        <ul class="list-unstyled small text-muted mb-3">
-                            <li><span class="badge bg-success-subtle text-success-emphasis me-1">Models</span> Risk CV AUC <strong>0.733</strong> &bull; imaging val <strong>0.940</strong> (ONNX) &bull; <strong>int8 TFLite 1.2 MB @ 0.803</strong></li>
-                            <li><span class="badge bg-success-subtle text-success-emphasis me-1">Routing</span> Real OSM Bamako network <strong>30k nodes / 88k edges</strong>, capability-filtered, time-first cost &bull; fairness audit included</li>
-                        </ul>
+                        <p class="small mb-2">End-to-end breast-cancer care platform attacking the distance, money and time barriers in Mali: risk stratification, ultrasound classification, 4-level referral triage and road-network routing to the nearest <em>capable</em> centre &mdash; behind a Flask API and mobile-first UI.</p>
+                        <div class="table-responsive mb-3">
+                            <table class="table table-sm small align-middle mb-0">
+                                <tbody>
+                                    <tr><td class="text-muted border-0 pt-0 ps-0">Risk stratification · CV AUC</td><td class="text-end border-0 pt-0 pe-0"><strong>0.733</strong></td></tr>
+                                    <tr><td class="text-muted ps-0">Imaging · val acc (ONNX fp32)</td><td class="text-end pe-0"><strong>0.940</strong></td></tr>
+                                    <tr><td class="text-muted ps-0">On-device · full-int8 TFLite (1.2 MB)</td><td class="text-end pe-0"><strong>0.803</strong></td></tr>
+                                    <tr><td class="text-muted pb-0 ps-0">Fairness · TPR gaps (region / wealth)</td><td class="text-end pb-0 pe-0"><strong>0.60 / 0.18</strong></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="mt-auto d-flex gap-2">
                             <a href="https://koneboi.github.io/mama-sante.html" target="_blank" class="btn btn-dark btn-sm">Project details</a>
                             <a href="https://github.com/koneboi/mama-sante" target="_blank" class="btn btn-outline-dark btn-sm">Repository</a>

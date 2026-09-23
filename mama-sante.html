@@ -103,6 +103,8 @@ progress. Each module attacks one barrier:</p>
 </table>
 <hr />
 <h2 id="2-results-at-a-glance">2. Results at a glance</h2>
+<p><img alt="Imaging results: accuracy vs model size across model variants" src="images/mama-sante-results.png" /></p>
+<p><em>Imaging classification family &mdash; MobileNetV3-Small retrained on BUSI, validated on the 15% seeded holdout (n=117). The full-int8 model keeps 85% of fp32 accuracy at 20% of the size and is the shipped on-device artifact.</em></p>
 <table>
 <tr><th>Component</th><th>Metric</th><th>Value</th></tr>
 <tr><td>Baseline logistic (EDA)</td><td>CV AUC</td><td>0.773</td></tr>
@@ -145,6 +147,7 @@ masks stripped — including the <code>*_mask_N.png</code> variants — leaving
 <strong>780 images: 437 benign / 210 malignant / 133 normal</strong>.</li>
 <li><strong>EDA:</strong> baseline logistic model established <strong>CV AUC 0.773</strong> as the number to beat/understand.</li>
 </ul>
+<p><img alt="BUSI dataset class distribution: benign 437, malignant 210, normal 133" src="images/mama-sante-data.png" /></p>
 <h3 id="step-3-risk">Step 3 — Risk stratification</h3>
 <p>GradientBoosting on the 7 configured features, seeded CV → <strong>CV AUC 0.733</strong>
 (<code>models/risk_gb.pkl</code>); feeds <code>/triage</code>.</p>
@@ -168,6 +171,7 @@ graph is impossible at any supported opset → <strong>F3</strong>.</li>
 <h3 id="step-7-triage">Step 7 — Triage engine</h3>
 <p>Pure-function <code>decide()</code> over risk score, imaging result and confidence floor
 0.65 → one of four configured levels; escalation threshold 0.8.</p>
+<p><img alt="Triage decision pipeline: inputs, four levels and capability-filtered router" src="images/mama-sante-triage.png" /></p>
 <h3 id="step-8-routing">Step 8 — Geographic routing</h3>
 <ul>
 <li><code>fetch_network.py</code> pulled the real OSM extract of Bamako:
@@ -180,6 +184,7 @@ capability).</li>
 <li><code>travel_metrics()</code>: network path → km, hours, FCFA; snap-guarded against &gt;2 km
 node mismatch, haversine ×1.3 fallback off-network. Transport: 150 FCFA/km.</li>
 </ul>
+<p><img alt="Referral geography: real OSM routing graph of Bamako and the 12-centre Malian fabric by capability level" src="images/mama-sante-routing.png" /></p>
 <h3 id="step-9-api">Step 9 — API</h3>
 <p>Flask: <code>/</code>, <code>/health</code>, <code>/classify</code> (multipart upload → persisted → ONNX
 inference), <code>/triage</code> (JSON → risk + level + centre recommendation).
@@ -280,6 +285,7 @@ hours matter more than distance.</p>
 <p>Pooled AUC 0.896 / ECE 0.024 hides a <strong>0.60 region TPR gap</strong> and <strong>0.18 wealth
 TPR gap</strong> — the poorest and some rural regions are systematically under-flagged by a
 pooled threshold. Pre-deployment blockers.</p>
+<p><img alt="Fairness audit: TPR by wealth quartile and by region on the synthetic cohort" src="images/mama-sante-fairness.png" /></p>
 <h3 id="f7">F7 — Operational robustness</h3>
 <p>Background <code>nohup</code> trainings were silently killed mid-run several times — run long
 jobs in the foreground with a generous timeout. Broken/experimental model outputs were
